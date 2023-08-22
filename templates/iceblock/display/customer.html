@@ -1,0 +1,27 @@
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>address</th>
+            <th>phone number</th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for customer in customers  %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.phone_number }}</td>
+        <td>
+            <a href={% url 'edit_customer' customer.id %}>Edit</a>
+            <a href={% url 'delete_customer' customer.id %}>Delete</a>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

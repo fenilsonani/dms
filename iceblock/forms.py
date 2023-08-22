@@ -4,7 +4,7 @@ from .models import Customer, Delivery
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['name', 'address']
+        fields = ['name', 'address', 'phone_number']
 
 class DeliveryForm(forms.ModelForm):
     class Meta:

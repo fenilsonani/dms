@@ -1,0 +1,43 @@
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Customer Name</th>
+            <th>Date</th>
+            <th>Ice Block Delivered</th>
+            <th>
+                One Ice Block Price
+            </th>
+            <th>
+                Total Ice Block Price
+            </th>
+            <th>
+                Additional Transportation Charge
+            </th>
+            <th>
+                Total Charge
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for delivery in deliveries  %}
+        <tr>
+            <td>{{ delivery.id }}</td>
+            <td>{{ delivery.customer }}</td>
+            <td>{{ delivery.date }}</td>
+            <td>{{ delivery.daily_ice_block_given }}</td>
+            <td>{{ delivery.one_ice_block_price }}</td>
+            <td>{{ delivery.total_ice_block_price }}</td>
+            <td>{{ delivery.additional_transportation_charge }}</td>
+            <td>{{ delivery.total_charge }}</td>
+        <td>
+            <a href={% url 'edit_delivery' delivery.id %}>Edit</a>
+            <a href={% url 'delete_delivery' delivery.id %}>Delete</a>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
