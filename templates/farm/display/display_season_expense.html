@@ -1,0 +1,29 @@
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Season</th>
+        <th>Expense Reason</th>
+        <th>Expense Amount</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for season_expenses in season_expenses %}
+        <tr>
+            <td>{{ season_expenses.id }}</td>
+            <td>{{ season_expenses.season }}</td>
+            <td>{{ season_expenses.expense }}</td>
+            <td>{{ season_expenses.amount }}</td>
+            <td>
+                <a href={% url 'edit_expense' season_expenses.id %}
+                           <button type="button" class="btn btn-primary">Edit</button>
+                </a>
+                <a href={% url 'delete_expense' season_expenses.id %}
+                           <button type="button" class="btn btn-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

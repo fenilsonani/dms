@@ -1,0 +1,39 @@
+{% if message %}
+    <p>
+        {{ message }}
+    </p>
+{% endif %}
+
+<a href={% url 'create_farm' %}>
+    <button>Create Farm</button>
+</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for farm in farms %}
+        <tr>
+            <td>
+                {{ farm.id }}
+            </td>
+            <td>
+                {{ farm.name }}
+            </td>
+            <td>
+                {{ farm.location }}
+            </td>
+            <td>
+                <a href={% url 'edit_farm' farm.id %}>Edit</a>
+                <a href={% url 'delete_farm' farm.id %}>Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

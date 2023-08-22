@@ -1,0 +1,27 @@
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.name }}</td>
+            <td>
+                <a href={% url 'edit_expense_type' expense.id %}>
+                    Edit Expense
+                </a>
+                <a href={% url 'delete_expense_type' expense.id %}>
+                    Delete Expense
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

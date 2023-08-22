@@ -1,0 +1,19 @@
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    {% for crop in crops %}
+        <tr>
+            <td>{{ crop.id }}</td>
+            <td>{{ crop.name }}</td>
+            <td>
+                <a href={% url 'edit_crop' crop.id %}>Edit Crop</a>
+                <a href={% url 'delete_crop' crop.id %}>Delete Crop</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
