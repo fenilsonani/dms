@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('dashboard/', include('dashboard.urls')),
     path('dashboard/farm/', include('farm.urls')),
+    path('dashboard/transport/', include('transport.urls')),
 ]

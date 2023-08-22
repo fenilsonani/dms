@@ -1,0 +1,34 @@
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Starting Km</th>
+        <th>Ending Km</th>
+        <th>Money Collected</th>
+        <th>Is Online Payment</th>
+        <th>Transection Id</th>
+        <th>Expenses</th>
+        <th>Diesel</th>
+        <th>
+            Action
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for trip in trips %}
+        <tr>
+        <td>{{ trip.id }}</td>
+        <td>{{ trip.starting_km }}</td>
+        <td>{{ trip.ending_km }}</td>
+        <td>{{ trip.money_collected }}</td>
+        <td>{{ trip.is_online_payment }}</td>
+        <td>{{ trip.transaction_id }}</td>
+        <td>{{ trip.expenses }}</td>
+        <td>{{ trip.diesel }}</td>
+        <td>
+            <a href={% url 'edit_trip' trip.id %}>Edit</a>
+            <a href={% url 'delete_trip' trip.id %}>Delete</a>
+        </td>
+    {% endfor %}
+    </tbody>
+</table>

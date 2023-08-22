@@ -1,0 +1,22 @@
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for expens in expenses %}
+        <tr>
+            <td>{{ expens.id }}</td>
+            <td>{{ expens.name }}</td>
+            <td>
+                <a href={% url 'edit_expense_type' expens.id %}>edit</a>
+                <a href={% url 'delete_expense_type' expens.id %}>delete</a>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

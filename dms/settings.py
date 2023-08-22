@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'dashboard',
-    'farm'
+    'farm',
+    'transport',
 ]
 
 MIDDLEWARE = [
