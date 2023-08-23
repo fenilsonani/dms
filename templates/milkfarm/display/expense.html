@@ -1,0 +1,43 @@
+{% if message %}
+    <p>
+        {{ message }}
+    </p>
+{% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Mobile Number</th>
+        <th>
+            Labor Type
+        </th>
+        <th>
+            Payment To Be Paid
+        </th>
+        <th>
+            Credit
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.mobile_number }}</td>
+            <td>{{ expense.labor_type }}</td>
+            <td>{{ expense.payment_to_be_paid }}</td>
+            <td>{{ expense.credit }}</td>
+            <td>
+                <a href={% url 'edit_milk_expense' expense.id %}>Edit</a>
+                <a href={% url 'delete_milk_expense' expense.id %}>Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

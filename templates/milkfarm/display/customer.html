@@ -1,0 +1,37 @@
+{% if message %}
+    <p>
+        {{ message }}
+    </p>
+{% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>name</th>
+        <th>mobile no</th>
+        <th>address</th>
+        <th>due amount</th>
+        <th>total amount</th>
+        <th>payment amount</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for customer in customers %}
+        <tr>
+            <td>{{ customers.id }}</td>
+            <td>{{ customers.name }}</td>
+            <td>{{ customers.mobile_no }}</td>
+            <td>{{ customers.address }}</td>
+            <td>{{ customers.due_amount }}</td>
+            <td>{{ customers.total_amount }}</td>
+            <td>{{ customers.payment_received }}</td>
+            <td>
+                <a href={% url 'edit_customer' payment.id %}>Edit</a>
+                <a href={% url 'delete_customer' payment.id %}>Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

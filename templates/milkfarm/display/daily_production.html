@@ -1,0 +1,33 @@
+{% if message %}
+    <p>
+        {{ message }}
+    </p>
+{% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>date</th>
+        <th>morning milk</th>
+        <th>evening milk</th>
+        <th>total milk</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for daily_production in daily_productions %}
+        <tr>
+            <td>{{ daily_production.id }}</td>
+            <td>{{ daily_production.date }}</td>
+            <td>{{ daily_production.morning_milk }}</td>
+            <td>{{ daily_production.evening_milk }}</td>
+            <td>{{ daily_production.total_milk }}</td>
+            <td>
+                <a href={% url 'edit_daily_production' payment.id %}>Edit</a>
+                <a href={% url 'delete_daily_production' payment.id %}>Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

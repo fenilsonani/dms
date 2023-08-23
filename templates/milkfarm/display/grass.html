@@ -1,0 +1,53 @@
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>locations</th>
+        <th>owner name</th>
+        <th>owner mobile</th>
+        <th>total gross amount</th>
+        <th>rate</th>
+        <th>final price</th>
+        <th>due amount</th>
+        <th>amount to be paid</th>
+        <th>action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for grass in grasses %}
+        <tr>
+            <td>
+                {{ grass.id }}
+            </td>
+            <td>
+                {{ grass.locations }}
+            </td>
+            <td>
+                {{ grass.owner_name }}
+            </td>
+            <td>
+                {{ grass.owner_mobile }}
+            </td>
+            <td>
+                {{ grass.total_amount_grass }}
+            </td>
+            <td>
+                {{ grass.rate }}
+            </td>
+            <td>
+                {{ grass.final_price }}
+            </td>
+            <td>
+                {{ grass.due_amount }}
+            </td>
+            <td>
+                {{ grass.amount_to_be_paid }}
+            </td>
+            <td>
+                <a href={% url 'edit_grass' grass.id %}>Edit</a>
+                <a href={% url 'delete_grass' grass.id %}>Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

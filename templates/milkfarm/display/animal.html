@@ -1,0 +1,24 @@
+{% if message %}
+    <p>
+        {{ message }}
+    </p>
+{% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for animal in animals %}
+        <tr>
+            <td>{{ animal.id }}</td>
+            <td>{{ animal.name }}</td>
+            <td>{{ animal.location }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
