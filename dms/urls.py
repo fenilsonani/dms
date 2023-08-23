@@ -26,4 +26,5 @@ urlpatterns = [
     path('dashboard/farm/', include('farm.urls')),
     path('dashboard/transport/', include('transport.urls')),
     path('dashboard/iceblock/', include('iceblock.urls')),
+    path('dashboard/rent/', include('rent.urls')),
 ]

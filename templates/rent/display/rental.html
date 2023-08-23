@@ -1,0 +1,37 @@
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>house</th>
+        <th>rent_amount</th>
+        <td>
+            rent_paid
+        </td>
+        <td>
+            tenant_name
+        </td>
+        <td>
+            mobile_number
+        </td>
+        <td>
+            action
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for rental in rentals %}
+        <tr>
+            <td>{{ rental.id }}</td>
+            <td>{{ rental.house }}</td>
+            <td>{{ rental.rent_amount }}</td>
+            <td>{{ rental.rent_paid }}</td>
+            <td>{{ rental.tenant_name }}</td>
+            <td>{{ rental.mobile_number }}</td>
+            <td>
+                <a href="{% url 'edit_rental' rental.id %}">edit</a>
+                <a href="{% url 'delete_rental' rental.id %}">delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

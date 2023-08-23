@@ -1,0 +1,25 @@
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>address</th>
+        <td>
+            Actions
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for house in houses %}
+        <tr>
+            <td>{{ house.id }}</td>
+            <td>{{ house.name }}</td>
+            <td>{{ house.address }}</td>
+            <td>
+                <a href="{% url 'edit_house' house.id %}">edit</a>
+                <a href="{% url 'delete_house' house.id %}">delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'farm',
     'transport',
     'iceblock',
+    'rent',
 ]
 
 MIDDLEWARE = [
