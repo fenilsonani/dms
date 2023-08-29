@@ -1,3 +1,4 @@
+{% extends 'core/sidebarfarming.html' %}
 <html>
 <head>
     <title>Add User into the System</title>
@@ -6,15 +7,51 @@
 <h1>
     Add User into the System
 </h1>
-{% if message %}
-    <p>
-        {{ message }}
-    </p>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add User">
-</form>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#    {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div>
+                        <label for="usernameInput" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" name="username"
+                               placeholder="Username">
+                    </div>
+                    <div>
+                        <label for="passwordInput" class="form-label">Enter Password</label>
+                        <input type="password" class="form-control" id="passwordInput" name="password1"
+                               placeholder="Enter password">
+                    </div>
+                    <div>
+                        <label for="passwordInput2" class="form-label">Enter Confirm Password</label>
+                        <input type="password" class="form-control" id="passwordInput2" name="password2"
+                               placeholder="Enter confirm password">
+                    </div>
+                    <div>
+                        <label for="nameInput" class="form-label">Enter First Name</label>
+                        <input type="text" class="form-control" id="nameInput" name="first_name"
+                               placeholder="Enter First Name">
+                    </div>
+                    <div>
+                        <label for="lnameInput" class="form-label">Enter Last Name</label>
+                        <input type="text" class="form-control mb-3" id="lnameInput" name="last_name"
+                               placeholder="Enter Last Name">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add User</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
 </body>
 </html>

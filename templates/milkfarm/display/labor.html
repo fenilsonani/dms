@@ -1,29 +1,85 @@
-<table>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>mobile_number</th>
-        <th>labor_type</th>
-        <th>payment_to_paid</th>
-        <th>credit</th>
-        <th>action</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for labor in labors %}
-        <tr>
-            <td>{{ labor.id }}</td>
-            <td>{{ labor.name }}</td>
-            <td>{{ labor.mobile_number }}</td>
-            <td>{{ labor.labor_type }}</td>
-            <td>{{ labor.payment_to_be_paid }}</td>
-            <td>{{ labor.credit }}</td>
-            <td>
-                <a href={% url 'edit_labor' grass.id %}>Edit</a>
-                <a href={% url 'delete_labor' grass.id %}>Delete</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>id</th>#}
+{#        <th>name</th>#}
+{#        <th>mobile_number</th>#}
+{#        <th>labor_type</th>#}
+{#        <th>payment_to_paid</th>#}
+{#        <th>credit</th>#}
+{#        <th>action</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for labor in labors %}#}
+{#        <tr>#}
+{#            <td>{{ labor.id }}</td>#}
+{#            <td>{{ labor.name }}</td>#}
+{#            <td>{{ labor.mobile_number }}</td>#}
+{#            <td>{{ labor.labor_type }}</td>#}
+{#            <td>{{ labor.payment_to_be_paid }}</td>#}
+{#            <td>{{ labor.credit }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_labor' grass.id %}>Edit</a>#}
+{#                <a href={% url 'delete_labor' grass.id %}>Delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% extends 'core/sidebarmilk.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col">mobile_number</th>
+                    <th scope="col">labor_type</th>
+                    <th scope="col">payment_to_paid</th>
+                    <th scope="col">credit</th>
+                    <th scope="col">action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for labor in labors %}
+                    <tr>
+                        <td>{{ labor.id }}</td>
+                        <td>{{ labor.name }}</td>
+                        <td>{{ labor.mobile_number }}</td>
+                        <td>{{ labor.labor_type }}</td>
+                        <td>{{ labor.payment_to_be_paid }}</td>
+                        <td>{{ labor.credit }}</td>
+                        <td>
+                            <a href={% url 'edit_labor' labor.id %}>Edit</a> |
+                            <a href={% url 'delete_labor' labor.id %}>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

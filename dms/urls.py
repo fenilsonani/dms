@@ -28,4 +28,5 @@ urlpatterns = [
     path('dashboard/iceblock/', include('iceblock.urls')),
     path('dashboard/rent/', include('rent.urls')),
     path('dashboard/milk/', include('milkfarm.urls')),
+    path('comming_soon/', views.comming_soon, name='comming_soon'),
 ]

@@ -1,43 +1,86 @@
-{% if message %}
-    <p>
-        {{ message }}
-    </p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>#}
+{#        {{ message }}#}
+{#    </p>#}
+{#{% endif %}#}
+{##}
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>Id</th>#}
+{#        <th>Expense</th>#}
+{#        <th>Amount</th>#}
+{#        <th>Date</th>#}
+{#        <th>Action</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for expense in expenses %}#}
+{#        <tr>#}
+{#            <td>{{ expense.id }}</td>#}
+{#            <td>{{ expense.expenses_type }}</td>#}
+{#            <td>{{ expense.amount }}</td>#}
+{#            <td>{{ expense.date }}</td>#}
+{#            <td>#}
+{#                Coming Soon#}
+                {#                <a href={% url 'edit_milk_expense' expense.id %}>Edit</a>#}
+                {#                <a href={% url 'delete_milk_expense' expense.id %}>Delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
 
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Mobile Number</th>
-        <th>
-            Labor Type
-        </th>
-        <th>
-            Payment To Be Paid
-        </th>
-        <th>
-            Credit
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for expense in expenses %}
-        <tr>
-            <td>{{ expense.id }}</td>
-            <td>{{ expense.name }}</td>
-            <td>{{ expense.mobile_number }}</td>
-            <td>{{ expense.labor_type }}</td>
-            <td>{{ expense.payment_to_be_paid }}</td>
-            <td>{{ expense.credit }}</td>
-            <td>
-                <a href={% url 'edit_milk_expense' expense.id %}>Edit</a>
-                <a href={% url 'delete_milk_expense' expense.id %}>Delete</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+{% extends 'core/sidebarmilk.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Expense</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.id }}</td>
+                        <td>{{ expense.expenses_type }}</td>
+                        <td>{{ expense.amount }}</td>
+                        <td>{{ expense.date }}</td>
+                        <td>
+                            Coming Soon
+                            {#                <a href={% url 'edit_milk_expense' expense.id %}>Edit</a>#}
+                            {#                <a href={% url 'delete_milk_expense' expense.id %}>Delete</a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

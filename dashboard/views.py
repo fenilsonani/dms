@@ -15,9 +15,19 @@ def dashboard(request):
             business = Business.objects.get(admin=request.user)
             # pass the user of the business to the template
             users = NormalUser.objects.filter(business=business)
-            return render(request, 'dashboard/admin_dash.html', {'usertype': 'Admin', 'business': business, 'users': users})
+
+            business = business.name.lower()
+
+            if business == "farming":
+                return render(request, 'dashboard/admin_dash.html', {'usertype': 'Admin', 'business': business, 'users': users})
+            elif business == "milk":
+                return render(request, 'dashboard/admin_dash_milk.html', {'usertype': 'Admin', 'business': business, 'users': users})
+            elif business == "transport":
+                return render(request, 'dashboard/admin_dash_transport.html', {'usertype': 'Admin', 'business': business, 'users': users})
+            else:
+                return render(request, 'dashboard/admin_dash.html', {'usertype': 'Admin', 'business': business, 'users': users})
         else:
-            return render(request, 'dashboard/admin_dash.html', {'usertype': 'Normal'})
+            return render(request, 'dashboard/normal_dash.html', {'usertype': 'Normal'})
     else:
         return render(request, 'users/not_loggedin.html')
 
@@ -49,21 +59,21 @@ def add_user_into_system(request):
 
 def add_normal_user(request):
     if request.user.is_authenticated:
-        final = is_admin(request.user)
+        final = is_admin(request.user)  # You mentioned you have this function
         if final:
-            form = NormalUserForm()
+            message = ""
             if request.method == 'POST':
                 form = NormalUserForm(request.POST)
                 if form.is_valid():
-                    user= form.cleaned_data['user']
-                    business = form.cleaned_data['business']
-                    is_admin1 = form.cleaned_data['is_admin']
-                    normal_user = NormalUser(user=user, business=business, is_admin=is_admin1)
-                    normal_user.save()
-                    return redirect('display_user',business_id=business.id)
+                    form.save()
+                    message = "User added successfully"
                 else:
-                    return render(request, 'dashboard/add_normal.html', {'message': 'Invalid form'})
-            return render(request, 'dashboard/add_normal.html', {'form': form})
+                    form = NormalUserForm()
+                    message = "Invalid form"
+                return render(request, 'dashboard/add_normal.html', {'form': form, 'message': message})
+            else:
+                form = NormalUserForm()
+                return render(request, 'dashboard/add_normal.html', {'form': form})
         else:
             return render(request, 'dashboard/normal_dash.html', {'message': 'You are not an admin'})
     else:

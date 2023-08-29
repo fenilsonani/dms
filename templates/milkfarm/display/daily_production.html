@@ -1,33 +1,88 @@
-{% if message %}
-    <p>
-        {{ message }}
-    </p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>#}
+{#        {{ message }}#}
+{#    </p>#}
+{#{% endif %}#}
+{##}
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>Id</th>#}
+{#        <th>date</th>#}
+{#        <th>morning milk</th>#}
+{#        <th>evening milk</th>#}
+{#        <th>total milk</th>#}
+{#        <th>actions</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for daily_production in daily_productions %}#}
+{#        <tr>#}
+{#            <td>{{ daily_production.id }}</td>#}
+{#            <td>{{ daily_production.date }}</td>#}
+{#            <td>{{ daily_production.morning_milk }}</td>#}
+{#            <td>{{ daily_production.evening_milk }}</td>#}
+{#            <td>{{ daily_production.total_milk }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_daily_production' payment.id %}>Edit</a>#}
+{#                <a href={% url 'delete_daily_production' payment.id %}>Delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
 
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>date</th>
-        <th>morning milk</th>
-        <th>evening milk</th>
-        <th>total milk</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for daily_production in daily_productions %}
-        <tr>
-            <td>{{ daily_production.id }}</td>
-            <td>{{ daily_production.date }}</td>
-            <td>{{ daily_production.morning_milk }}</td>
-            <td>{{ daily_production.evening_milk }}</td>
-            <td>{{ daily_production.total_milk }}</td>
-            <td>
-                <a href={% url 'edit_daily_production' payment.id %}>Edit</a>
-                <a href={% url 'delete_daily_production' payment.id %}>Delete</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+{% extends 'core/sidebarmilk.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Morning Milk</th>
+                    <th scope="col">Evening Milk</th>
+                    <th scope="col">Total Milk</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for daily_production in daily_productions %}
+                    <tr>
+                        <td>{{ daily_production.id }}</td>
+                        <td>{{ daily_production.date }}</td>
+                        <td>{{ daily_production.morning_milk }}</td>
+                        <td>{{ daily_production.evening_milk }}</td>
+                        <td>{{ daily_production.total_milk }}</td>
+                        <td>
+                            <a href={% url 'edit_daily_production' daily_production.id %}>Edit</a> |
+                            <a href={% url 'delete_daily_production' daily_production.id %}>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

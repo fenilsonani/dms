@@ -71,12 +71,23 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     mobile_number = models.CharField(max_length=15)
     address = models.TextField()
-    due_amount = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
-    payment_received = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
+    due_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    payment_received = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.total_amount is not None and self.payment_received is not None:
+            self.due_amount = self.total_amount - self.payment_received
+        super().save(*args, **kwargs)
+
+    #     update
+    def update(self, *args, **kwargs):
+        if self.total_amount is not None and self.payment_received is not None:
+            self.due_amount = self.total_amount - self.payment_received
+        super().update(*args, **kwargs)
 
 
 class Payment(models.Model):
@@ -125,23 +136,3 @@ class DailyDelivery(models.Model):
 
     def __str__(self):
         return f"Daily Delivery of {self.customer} on {self.date}"
-
-    def save(self, *args, **kwargs):
-        self.total_milk = self.morning_milk + self.evening_milk
-        self.final_price = self.total_milk * self.rate
-        self.customer.total_amount += self.final_price
-        self.customer.due_amount += self.final_price
-        self.customer.save()
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        self.customer.total_amount -= self.final_price
-        self.customer.due_amount -= self.final_price
-        self.customer.save()
-        super().delete(*args, **kwargs)
-
-    def update(self, *args, **kwargs):
-        self.customer.total_amount -= self.final_price
-        self.customer.due_amount -= self.final_price
-        self.customer.save()
-        super().update(*args, **kwargs)

@@ -46,7 +46,9 @@ def create_season(request):
                 form.save()
                 return render(request, 'farm/add_season.html', {'form': form, 'message': 'Season added successfully'})
             else:
-                return render(request, 'farm/add_season.html', {'form': form, 'message': 'Invalid form'})
+                error = form.errors
+                return render(request, 'farm/add_season.html',
+                              {'form': form, 'message': 'Invalid form', 'error': error})
         else:
             form = SeasonForm()
             return render(request, 'farm/add_season.html', {'form': form})
@@ -205,6 +207,7 @@ def display_season_expense(request):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def edit_season_expense(request, id):
     if request.user.is_authenticated:
         season_expense = SeasonExpense.objects.get(pk=id)
@@ -222,6 +225,7 @@ def edit_season_expense(request, id):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def delete_season_expense(request, id):
     if request.user.is_authenticated:
         season_expense = SeasonExpense.objects.get(pk=id)
@@ -231,6 +235,7 @@ def delete_season_expense(request, id):
                       {'message': 'Season Expense deleted successfully', 'season_expenses': season_expenses})
     else:
         return render(request, 'users/not_loggedin.html')
+
 
 def display_farm(request):
     if request.user.is_authenticated:

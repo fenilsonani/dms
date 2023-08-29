@@ -1,9 +1,82 @@
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+
+{% extends 'core/sidebarmilk.html' %}
+<html>
+<head>
+    <title>Add Crop Into The System</title>
+</head>
+<body>
+<h1>
+    Add Crop
+</h1>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#        {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Customer : </label>
+                        <select name="customer" class="form-control">
+                            {% for cus in form.customer %}
+                                {{ cus }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount : </label>
+                        <input type="number" class="form-control" id="amount" name="amount"
+                               value="0"
+                               placeholder="Enter Amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date : </label>
+                        <input type="date" class="form-control" id="date" name="date"
+                               value="0"
+                               placeholder="Select Date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_milk" class="form-label">Payment Method : </label>
+                        <select class="form-control" name="payment_method" id="payment_method">
+                            {% for payment_m in form.payment_method %}
+                                {{ payment_m }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_milk" class="form-label">Payment Id : </label>
+                        <input class="form-control" name="payment_id" id="payment_id" value="0">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add User</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+</body>
+</html>

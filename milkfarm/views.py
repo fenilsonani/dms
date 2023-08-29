@@ -243,8 +243,9 @@ def create_daily_delivery(request):
                 return render(request, 'milkfarm/daily_delivery.html',
                               {'form': form, 'message': 'Daily Delivery Added Successfully'})
             else:
+                error = form.errors
                 return render(request, 'milkfarm/daily_delivery.html',
-                              {'form': form, 'message': 'Daily Delivery Not Added'})
+                              {'form': form, 'message': 'Daily Delivery Not Added', 'error': error})
         else:
             form = DailyDeliveryForm()
         return render(request, 'milkfarm/daily_delivery.html', {'form': form})
@@ -365,7 +366,8 @@ def update_daily_delivery(request, id):
                 return render(request, 'milkfarm/edit/daily_delivery.html',
                               {'form': form, 'message': 'Daily Delivery Updated Successfully'})
             else:
-                return render(request, 'milkfarm/edit/daily_delivery.html', {'form': form, 'message': 'Daily Delivery Not Updated'})
+                return render(request, 'milkfarm/edit/daily_delivery.html',
+                              {'form': form, 'message': 'Daily Delivery Not Updated'})
         else:
             form = DailyDeliveryForm(instance=daily_delivery)
         return render(request, 'milkfarm/edit/daily_delivery.html', {'form': form})
@@ -383,7 +385,8 @@ def update_daily_production(request, id):
                 return render(request, 'milkfarm/edit/daily_production.html',
                               {'form': form, 'message': 'Daily Production Updated Successfully'})
             else:
-                return render(request, 'milkfarm/edit/daily_production.html', {'form': form, 'message': 'Daily Production Not Updated'})
+                return render(request, 'milkfarm/edit/daily_production.html',
+                              {'form': form, 'message': 'Daily Production Not Updated'})
         else:
             form = DailyProductionForm(instance=daily_production)
         return render(request, 'milkfarm/edit/daily_production.html', {'form': form})
@@ -404,7 +407,8 @@ def delete_daily_delivery(request, id):
     if request.user.is_authenticated:
         daily_delivery = DailyDelivery.objects.get(id=id)
         daily_delivery.delete()
-        return render(request, 'milkfarm/display/daily_delivery.html', {'message': 'Daily Delivery Deleted Successfully'})
+        return render(request, 'milkfarm/display/daily_delivery.html',
+                      {'message': 'Daily Delivery Deleted Successfully'})
     else:
         return render(request, 'users/not_loggedin.html')
 
@@ -413,7 +417,8 @@ def delete_daily_production(request, id):
     if request.user.is_authenticated:
         daily_production = DailyProduction.objects.get(id=id)
         daily_production.delete()
-        return render(request, 'milkfarm/display/daily_production.html', {'message': 'Daily Production Deleted Successfully'})
+        return render(request, 'milkfarm/display/daily_production.html',
+                      {'message': 'Daily Production Deleted Successfully'})
     else:
         return render(request, 'users/not_loggedin.html')
 

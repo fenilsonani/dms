@@ -1,19 +1,66 @@
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    {% for crop in crops %}
-        <tr>
-            <td>{{ crop.id }}</td>
-            <td>{{ crop.name }}</td>
-            <td>
-                <a href={% url 'edit_crop' crop.id %}>Edit Crop</a>
-                <a href={% url 'delete_crop' crop.id %}>Delete Crop</a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>ID</th>#}
+{#        <th>Name</th>#}
+{#        <th>Actions</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    {% for crop in crops %}#}
+{#        <tr>#}
+{#            <td>{{ crop.id }}</td>#}
+{#            <td>{{ crop.name }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_crop' crop.id %}>Edit Crop</a>#}
+{#                <a href={% url 'delete_crop' crop.id %}>Delete Crop</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{% extends 'core/sidebarfarming.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for crop in crops %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ crop.id }}</a></th>
+                        <td>{{ crop.name }}</td>
+                        <td>
+                            <a href={% url 'edit_crop' crop.id %}>Edit Crop</a> |
+                            <a href={% url 'delete_crop' crop.id %}>Delete Crop</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

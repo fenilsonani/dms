@@ -1,27 +1,93 @@
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>ID</th>#}
+{#        <th>Name</th>#}
+{#        <th>Actions</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    {% for expense in expenses %}#}
+{#        <tr>#}
+{#            <td>{{ expense.id }}</td>#}
+{#            <td>{{ expense.name }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_expense_type' expense.id %}>#}
+{#                    Edit Expense#}
+{#                </a>#}
+{#                <a href={% url 'delete_expense_type' expense.id %}>#}
+{#                    Delete Expense#}
+{#                </a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>ID</th>#}
+{#        <th>Name</th>#}
+{#        <th>Actions</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    {% for crop in crops %}#}
+{#        <tr>#}
+{#            <td>{{ crop.id }}</td>#}
+{#            <td>{{ crop.name }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_crop' crop.id %}>Edit Crop</a>#}
+{#                <a href={% url 'delete_crop' crop.id %}>Delete Crop</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{% extends 'core/sidebarfarming.html' %}
+{% load i18n %}
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    {% for expense in expenses %}
-        <tr>
-            <td>{{ expense.id }}</td>
-            <td>{{ expense.name }}</td>
-            <td>
-                <a href={% url 'edit_expense_type' expense.id %}>
-                    Edit Expense
-                </a>
-                <a href={% url 'delete_expense_type' expense.id %}>
-                    Delete Expense
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Expense Types</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ expense.id }}</a></th>
+                        <td>{{ expense.name }}</td>
+                        <td>
+                            <a href={% url 'edit_expense_type' expense.id %}>Edit Crop</a> |
+                            <a href={% url 'delete_expense_type' expense.id %}>Delete Crop</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

@@ -1,11 +1,11 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render,redirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-from .models import AdminUser, NormalUser, Business
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+
 from dashboard.views import dashboard
+from .models import AdminUser, NormalUser, Business
+
 
 # Create your views here.
 def login_admin(request):
@@ -32,6 +32,7 @@ def login_admin(request):
     business_list = Business.objects.all()
     return render(request, 'users/login_admin.html', {'business_list': business_list})
 
+
 # view for logging in a normal user
 def login_normal(request):
     if request.method == 'POST':
@@ -55,12 +56,12 @@ def login_normal(request):
     business_list = Business.objects.all()
     return render(request, 'users/login_normal.html', {'business_list': business_list})
 
+
 # view for logging out a user
 @login_required
 def logout_user(request):
     logout(request)
     return render(request, 'users/logout.html')
-
 
 # def dashboard(request):
 #     if request.user.is_authenticated:

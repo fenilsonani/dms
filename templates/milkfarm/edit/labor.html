@@ -1,9 +1,108 @@
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+
+{% extends 'core/sidebarmilk.html' %}
+<html>
+<head>
+    <title>Add Crop Into The System</title>
+</head>
+<body>
+<h1>
+    Add Crop
+</h1>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#        {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name : </label>
+                        <input type="text" class="form-control" id="name" name="name"
+                               value="{{ form.name.value }}"
+                               placeholder="Enter Location">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile_number" class="form-label">Mobile No : </label>
+                        <input type="text" class="form-control" id="mobile_number" name="mobile_number"
+                               value="{{ form.mobile_number.value }}"
+                               placeholder="Enter Labor Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_amount_grass" class="form-label">Labor Type : </label>
+                        <select class="form-select" aria-label="Default select example" name="labor_type" aria-selected="{{ form.labor_type.value }}">
+                            {% for labt in form.labor_type %}
+                                {{ labt }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="payment_to_be_paid" class="form-label">Amount To Paid : </label>
+                        <input type="number" class="form-control" id="payment_to_be_paid" name="payment_to_be_paid"
+                               value="{{ form.payment_to_be_paid.value }}"
+                               placeholder="Enter Amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="credit" class="form-label">Credit : </label>
+                        <input type="number" class="form-control" id="credit" name="credit"
+                               value="{{ form.credit.value }}"
+                               placeholder="Enter Credit Amount">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add Expense</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+    let amount_to_be_paid = document.getElementById('payment_to_be_paid');
+    let credit = document.getElementById('credit');
+    credit.addEventListener('keyup', function () {
+        amount_to_be_paid.value = parseInt(amount_to_be_paid.value) - parseInt(credit.value);
+    });
+    </script>
+{% endblock %}
+</body>
+</html>

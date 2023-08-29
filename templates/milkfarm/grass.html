@@ -1,9 +1,114 @@
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'core/sidebarmilk.html' %}
+<html>
+<head>
+    <title>Add Crop Into The System</title>
+</head>
+<body>
+<h1>
+    Add Crop
+</h1>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#        {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location : </label>
+                        <input type="text" class="form-control" id="location" name="location"
+                               value=""
+                               placeholder="Enter Location">
+                    </div>
+                    <div class="mb-3">
+                        <label for="morning_milk" class="form-label">Owner Name : </label>
+                        <input type="text" class="form-control" id="owner_name" name="owner_name"
+                               placeholder="Enter Owner Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="evening_milk" class="form-label">Owner Mobile : </label>
+                        <input type="number" class="form-control" id="owner_mobile" name="owner_mobile"
+                               placeholder="Enter Owner Mobile">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_amount_grass" class="form-label">Total Gross Amount : </label>
+                        <input type="number" class="form-control" id="total_amount_grass" name="total_amount_grass"
+                               value="0"
+                               placeholder="Enter Owner Mobile">
+                    </div>
+                    <div class="mb-3">
+                        <label for="rate" class="form-label">Rate : </label>
+                        <input type="number" class="form-control" id="rate" name="rate"
+                               value="0"
+                               placeholder="Enter Rate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_amount" class="form-label">Final Amount : </label>
+                        <input type="number" class="form-control" id="final_price" name="final_price"
+                               value="0"
+                               placeholder="Enter Final Amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_amount" class="form-label">Amount Paid : </label>
+                        <input type="number" class="form-control" id="amount_to_be_paid" name="amount_to_be_paid"
+                               value="0"
+                               placeholder="Enter Amount Paid">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_amount" class="form-label">Due Amount : </label>
+                        <input type="number" class="form-control" id="due_amount" name="due_amount"
+                               value="0"
+                               placeholder="Enter Amount Paid">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add Expense</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        let total_amount_grass = document.getElementById('total_amount_grass');
+        let rate = document.getElementById('rate');
+        let final_price = document.getElementById('final_price');
+        let amount_to_be_paid = document.getElementById('amount_to_be_paid');
+        let due_amount = document.getElementById('due_amount');
+        total_amount_grass.addEventListener('keyup', function () {
+            final_price.value = total_amount_grass.value * rate.value;
+            amount_to_be_paid.value = final_price.value;
+            due_amount.value = 0;
+        });
+        rate.addEventListener('keyup', function () {
+            final_price.value = total_amount_grass.value * rate.value;
+            due_amount.value = 0;
+        });
+        amount_to_be_paid.addEventListener('keyup', function () {
+            due_amount.value = final_price.value - amount_to_be_paid.value;
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

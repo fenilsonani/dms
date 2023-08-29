@@ -1,20 +1,123 @@
+{#<html>#}
+{#<head>#}
+{#    <title> Add Season</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>#}
+{#    Add Season#}
+{#</h1>#}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+{% extends 'core/sidebarfarming.html' %}
 <html>
 <head>
-    <title> Add Season</title>
+    <title>Add Season Type Into The System</title>
 </head>
 <body>
-<h1>
-    Add Season
-</h1>
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#    {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="farm" class="form-label">Select The Farm</label>
+                        <select class="form-select" aria-label="Select the Farm" name="farm">
+                            {% for farm in form.farm %}
+                                {{ farm }}
+                            {% endfor %}
+                        </select>
 
+                    </div>
+                    <div class="mb-3">
+                        <label for="crop" class="form-label">Select The Crop</label>
+                        <select class="form-select" aria-label="Select the Crop" name="crop">
+                            {% for crop in form.crop %}
+                                {{ crop }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="starting_date" class="form-label">Select The Season</label>
+                        <input name="starting_date" type="date" class="form-control" id="starting_date"
+                               aria-describedby="starting_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="harvested_crop_amount_tons" class="form-label">
+                            Harvested Crop Amount
+                        </label>
+                        <input name="harvested_crop_amount_tons" type="number" class="form-control"
+                               id="harvested_crop_amount_tons"
+                               value="0"
+                               aria-describedby="harvested_crop_amount_tons">
+                    </div>
+                    {#                harvested_crop_price_per_ton#}
+                    <div class="mb-3">
+                        <label for="harvested_crop_price_per_ton" class="form-label">
+                            Harvested Crop Price Per Ton
+                        </label>
+                        <input name="harvested_crop_price_per_ton" type="number" class="form-control"
+                               id="harvested_crop_price_per_ton"
+                               value="0"
+                               aria-describedby="harvested_crop_price_per_ton">
+                    </div>
+                    {#                first_payment#}
+                    <div class="mb-3">
+                        <label for="first_payment" class="form-label">
+                            First Payment
+                        </label>
+                        <input name="first_payment" type="number" class="form-control"
+                               id="first_payment"
+                               value="0"
+                               aria-describedby="first_payment">
+                    </div>
+                    {#                second_payment#}
+                    <div class="mb-3">
+                        <label for="second_payment" class="form-label">
+                            Second Payment
+                        </label>
+                        <input name="second_payment" type="number" class="form-control"
+                               id="second_payment"
+                               value="0"
+                               aria-describedby="second_payment">
+                    </div>
+                    {#                status#}
+                    {{ form.status }}
+                    <label for="status" class="form-label">
+                        Status
+                    </label>
+                    <br>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add Farm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
 </body>
 </html>

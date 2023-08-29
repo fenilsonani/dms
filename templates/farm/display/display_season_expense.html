@@ -1,29 +1,85 @@
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Season</th>
-        <th>Expense Reason</th>
-        <th>Expense Amount</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for season_expenses in season_expenses %}
-        <tr>
-            <td>{{ season_expenses.id }}</td>
-            <td>{{ season_expenses.season }}</td>
-            <td>{{ season_expenses.expense }}</td>
-            <td>{{ season_expenses.amount }}</td>
-            <td>
-                <a href={% url 'edit_expense' season_expenses.id %}
-                           <button type="button" class="btn btn-primary">Edit</button>
-                </a>
-                <a href={% url 'delete_expense' season_expenses.id %}
-                           <button type="button" class="btn btn-danger">Delete</button>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>Id</th>#}
+{#        <th>Season</th>#}
+{#        <th>Expense Reason</th>#}
+{#        <th>Expense Amount</th>#}
+{#        <th>Action</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for season_expenses in season_expenses %}#}
+{#        <tr>#}
+{#            <td>{{ season_expenses.id }}</td>#}
+{#            <td>{{ season_expenses.season }}</td>#}
+{#            <td>{{ season_expenses.expense }}</td>#}
+{#            <td>{{ season_expenses.amount }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_expense' season_expenses.id %}#}
+{#                           <button type="button" class="btn btn-primary">Edit</button>#}
+{#                </a>#}
+{#                <a href={% url 'delete_expense' season_expenses.id %}#}
+{#                           <button type="button" class="btn btn-danger">Delete</button>#}
+{#                </a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+{% extends 'core/sidebarfarming.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Season</th>
+                    <th scope="col">Expense Reason</th>
+                    <th scope="col">Expense Amount</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for season_expense in season_expenses %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ season_expense.id }}</a></th>
+                        <td>{{ season_expense.season }}</td>
+                        <td>{{ season_expense.expense }}</td>
+                        <td>{{ season_expense.amount }}</td>
+                        <td>
+                            <a href="{% url 'edit_expense' season_expense.id %}">
+                                Edit
+                            </a>
+                            |
+                            <a href="{% url 'delete_expense' season_expense.id %}">
+                                Delete
+                            </a>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+
+
