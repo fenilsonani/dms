@@ -54,7 +54,7 @@ class Grass(models.Model):
 
 
 class DailyProduction(models.Model):
-    date = models.DateField()
+    date = models.DateField(unique=True)
     evening_milk = models.DecimalField(max_digits=10, decimal_places=2)
     morning_milk = models.DecimalField(max_digits=10, decimal_places=2)
     total_milk = models.DecimalField(max_digits=10, decimal_places=2)

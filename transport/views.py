@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from .forms import TripForm, ExpenseForm,TransportExpensesForm
-from .models import Trips,TransportExpenses,Expense
+
+from .forms import TripForm, ExpenseForm, TransportExpensesForm
+from .models import Trips, TransportExpenses, Expense
+
 
 def create_trip(request):
     if request.user.is_authenticated:
@@ -9,9 +11,14 @@ def create_trip(request):
             if trip_form.is_valid():
                 trip = trip_form.save()
                 # Do something with the saved trip object
+                message = 'Trip added successfully'
+                context = {'trip_form': trip_form, 'message': message}
+                return render(request, 'transport/add_trip.html', context)
         else:
             trip_form = TripForm()
-
+            error = trip_form.errors
+            context = {'trip_form': trip_form, 'error': error, 'message': 'Trip not added'}
+            return render(request, 'transport/add_trip.html', context)
         context = {'trip_form': trip_form}
         return render(request, 'transport/add_trip.html', context)
 
@@ -23,11 +30,18 @@ def create_expense(request):
             if expense_form.is_valid():
                 expense = expense_form.save()
                 # Do something with the saved expense object
+                message = 'Expense added successfully'
+                context = {'expense_form': expense_form, 'message': message}
+                return render(request, 'transport/create_expense.html', context)
+            else:
+                message = 'Expense not added'
+                context = {'expense_form': expense_form, 'message': message}
+                return render(request, 'transport/create_expense.html', context)
         else:
             expense_form = ExpenseForm()
-
         context = {'expense_form': expense_form}
         return render(request, 'transport/create_expense.html', context)
+
 
 def add_expense(request):
     if request.user.is_authenticated:
@@ -36,7 +50,7 @@ def add_expense(request):
             if expense_form.is_valid():
                 expense = expense_form.save()
                 # Do something with the saved expense object
-        #         add message to context
+                #         add message to context
                 context = {'expense_form': expense_form}
                 return render(request, 'transport/add_expense.html', context)
         else:
@@ -54,6 +68,7 @@ def display_trips(request):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def display_expenses_type(request):
     if request.user.is_authenticated:
         expenses = Expense.objects.all()
@@ -62,6 +77,7 @@ def display_expenses_type(request):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def display_expenses(request):
     if request.user.is_authenticated:
         expenses = TransportExpenses.objects.all()
@@ -69,6 +85,7 @@ def display_expenses(request):
         return render(request, 'transport/display/expenses.html', context)
     else:
         return render(request, 'users/not_loggedin.html')
+
 
 def edit_trip(request, trip_id):
     if request.user.is_authenticated:
@@ -82,9 +99,10 @@ def edit_trip(request, trip_id):
             trip_form = TripForm(instance=trip)
 
         context = {'trip_form': trip_form}
-        return render(request, 'transport/edit/expenses.html', context)
+        return render(request, 'transport/edit/trips.html', context)
     else:
         return render(request, 'users/not_loggedin.html')
+
 
 def edit_expense(request, expense_id):
     if request.user.is_authenticated:
@@ -102,6 +120,7 @@ def edit_expense(request, expense_id):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def edit_expense_type(request, expense_id):
     if request.user.is_authenticated:
         expense = Expense.objects.get(id=expense_id)
@@ -118,6 +137,7 @@ def edit_expense_type(request, expense_id):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def delete_trip(request, trip_id):
     if request.user.is_authenticated:
         trip = Trips.objects.get(id=trip_id)
@@ -125,6 +145,7 @@ def delete_trip(request, trip_id):
         return render(request, 'transport/display/trips.html')
     else:
         return render(request, 'users/not_loggedin.html')
+
 
 def delete_expense(request, expense_id):
     if request.user.is_authenticated:
@@ -134,6 +155,7 @@ def delete_expense(request, expense_id):
     else:
         return render(request, 'users/not_loggedin.html')
 
+
 def delete_expense_type(request, expense_id):
     if request.user.is_authenticated:
         expense = Expense.objects.get(id=expense_id)
@@ -141,4 +163,3 @@ def delete_expense_type(request, expense_id):
         return render(request, 'transport/display/expenses_type.html')
     else:
         return render(request, 'users/not_loggedin.html')
-

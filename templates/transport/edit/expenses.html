@@ -1,5 +1,93 @@
-<form method="post">
-    {% csrf_token %}
-    {{ trip_form.as_p }}
-    <input type="submit" value="submit">
-</form>
+{#<form method="post">#}
+{#    {{ expense_form.as_p }}#}
+{#    <input type="submit" value="submit">#}
+{#</form>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ expense_form.as_p }}#}
+{#        <input type="submit" value="Submit">#}
+{#    </form>#}
+{#</body>#}
+{#</html>#}
+
+{#<html>#}
+{#<head>#}
+{#    <title> Add Season</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>#}
+{#    Add Season#}
+{#</h1>#}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+{% extends 'core/sidebartransport.html' %}
+<html>
+<head>
+    <title>
+        Add Expenses
+    </title>
+</head>
+<body>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#    {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Select Reason</label>
+                        <select name="name" id="name" class="form-control" aria-selected="{{ expense_form.name.value }}">
+                            {% for nam in expense_form.name %}
+                                {{ nam }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Amount</label>
+                        <input name="amount" type="text" class="form-control" id="amount"
+                               placeholder="Enter Amount"
+                               value="{{ expense_form.amount.value }}"
+                               aria-describedby="amount">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add Farm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+</body>
+</html>

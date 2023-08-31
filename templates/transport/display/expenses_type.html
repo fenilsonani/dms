@@ -1,22 +1,72 @@
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>
-            Actions
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for expens in expenses %}
-        <tr>
-            <td>{{ expens.id }}</td>
-            <td>{{ expens.name }}</td>
-            <td>
-                <a href={% url 'edit_expense_type' expens.id %}>edit</a>
-                <a href={% url 'delete_expense_type' expens.id %}>delete</a>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>Id</th>#}
+{#        <th>Name</th>#}
+{#        <th>#}
+{#            Actions#}
+{#        </th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for expens in expenses %}#}
+{#        <tr>#}
+{#            <td>{{ expens.id }}</td>#}
+{#            <td>{{ expens.name }}</td>#}
+{#            <td>#}
+{#                <a href={% url 'edit_expense_type' expens.id %}>edit</a>#}
+{#                <a href={% url 'delete_expense_type' expens.id %}>delete</a>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% extends 'core/sidebartransport.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Display Expenses
+    </title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ expense.id }}</a></th>
+                        <td>{{ expense.name }}</td>
+                        <td>
+                            <a href={% url 'edit_expense_type_transport' expense.id %}>Edit Crop</a> |
+                            <a href={% url 'delete_expense_type_transport' expense.id %}>Delete Crop</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

@@ -1,34 +1,96 @@
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Starting Km</th>
-        <th>Ending Km</th>
-        <th>Money Collected</th>
-        <th>Is Online Payment</th>
-        <th>Transection Id</th>
-        <th>Expenses</th>
-        <th>Diesel</th>
-        <th>
-            Action
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for trip in trips %}
-        <tr>
-        <td>{{ trip.id }}</td>
-        <td>{{ trip.starting_km }}</td>
-        <td>{{ trip.ending_km }}</td>
-        <td>{{ trip.money_collected }}</td>
-        <td>{{ trip.is_online_payment }}</td>
-        <td>{{ trip.transaction_id }}</td>
-        <td>{{ trip.expenses }}</td>
-        <td>{{ trip.diesel }}</td>
-        <td>
-            <a href={% url 'edit_trip' trip.id %}>Edit</a>
-            <a href={% url 'delete_trip' trip.id %}>Delete</a>
-        </td>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>Id</th>#}
+{#        <th>Starting Km</th>#}
+{#        <th>Ending Km</th>#}
+{#        <th>Money Collected</th>#}
+{#        <th>Is Online Payment</th>#}
+{#        <th>Transection Id</th>#}
+{#        <th>Expenses</th>#}
+{#        <th>Diesel</th>#}
+{#        <th>#}
+{#            Action#}
+{#        </th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for trip in trips %}#}
+{#        <tr>#}
+{#        <td>{{ trip.id }}</td>#}
+{#        <td>{{ trip.starting_km }}</td>#}
+{#        <td>{{ trip.ending_km }}</td>#}
+{#        <td>{{ trip.money_collected }}</td>#}
+{#        <td>{{ trip.is_online_payment }}</td>#}
+{#        <td>{{ trip.transaction_id }}</td>#}
+{#        <td>{{ trip.expenses }}</td>#}
+{#        <td>{{ trip.diesel }}</td>#}
+{#        <td>#}
+{#            <a href={% url 'edit_trip' trip.id %}>Edit</a>#}
+{#            <a href={% url 'delete_trip' trip.id %}>Delete</a>#}
+{#        </td>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% extends 'core/sidebartransport.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Display Expenses
+    </title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Starting Km</th>
+                    <th scope="col">Endling Km</th>
+                    <th scope="col">Money Collected</th>
+                    <th scope="col">Is Online Payment</th>
+                    <th scope="col">Transaction Id</th>
+                    <th scope="col">Expenses</th>
+                    <th scope="col">Diesel</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for trip in trips %}
+                    <tr>
+                        <td>{{ trip.id }}</td>
+                        <td>{{ trip.starting_km }}</td>
+                        <td>{{ trip.ending_km }}</td>
+                        <td>{{ trip.money_collected }}</td>
+                        <td>{{ trip.is_online_payment }}</td>
+                        <td>{{ trip.transaction_id }}</td>
+                        <td>{{ trip.expenses }}</td>
+                        <td>{{ trip.diesel }}</td>
+                        <td>
+                            <a href={% url 'edit_trip' trip.id %}>Edit Trip</a>
+                            <a href={% url 'delete_trip' trip.id %}>Edit Trip</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

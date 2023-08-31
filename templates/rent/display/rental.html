@@ -1,37 +1,92 @@
-<table>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>house</th>
-        <th>rent_amount</th>
-        <td>
-            rent_paid
-        </td>
-        <td>
-            tenant_name
-        </td>
-        <td>
-            mobile_number
-        </td>
-        <td>
-            action
-        </td>
-    </tr>
-    </thead>
-    <tbody>
-    {% for rental in rentals %}
-        <tr>
-            <td>{{ rental.id }}</td>
-            <td>{{ rental.house }}</td>
-            <td>{{ rental.rent_amount }}</td>
-            <td>{{ rental.rent_paid }}</td>
-            <td>{{ rental.tenant_name }}</td>
-            <td>{{ rental.mobile_number }}</td>
-            <td>
-                <a href="{% url 'edit_rental' rental.id %}">edit</a>
-                <a href="{% url 'delete_rental' rental.id %}">delete</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>id</th>#}
+{#        <th>house</th>#}
+{#        <th>rent_amount</th>#}
+{#        <td>#}
+{#            rent_paid#}
+{#        </td>#}
+{#        <td>#}
+{#            tenant_name#}
+{#        </td>#}
+{#        <td>#}
+{#            mobile_number#}
+{#        </td>#}
+{#        <td>#}
+{#            action#}
+{#        </td>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for rental in rentals %}#}
+{#        <tr>#}
+{#            <td>{{ rental.id }}</td>#}
+{#            <td>{{ rental.house }}</td>#}
+{#            <td>{{ rental.rent_amount }}</td>#}
+{#            <td>{{ rental.rent_paid }}</td>#}
+{#            <td>{{ rental.tenant_name }}</td>#}
+{#            <td>{{ rental.mobile_number }}</td>#}
+{#            <td>#}
+{#                <a href="{% url 'edit_rental' rental.id %}">edit</a>#}
+{#                <a href="{% url 'delete_rental' rental.id %}">delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% extends 'core/sidebarrent.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Crop</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">House</th>
+                    <th scope="col">Rent Amount</th>
+                    <th scope="col">Rent Paid</th>
+                    <th scope="col">Tenant Amount</th>
+                    <th scope="col">Mobile No.</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rental in rentals %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ rental.id }}</a></th>
+                        <td>{{ rental.house }}</td>
+                        <td>{{ rental.rent_amount }}</td>
+                        <td>{{ rental.rent_paid }}</td>
+                        <td>{{ rental.tenant_name }}</td>
+                        <td>{{ rental.mobile_number }}</td>
+                        <td>
+                            <a href={% url 'edit_rental' rental.id %}>Edit</a> |
+                            <a href={% url 'delete_rental' rental.id %}>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>
+

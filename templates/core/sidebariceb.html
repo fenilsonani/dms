@@ -71,57 +71,25 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarCrop" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarCrop">
-                        <span class="mdi mdi-barley"
-                            style="scale: 1.5;margin-right: 10px"
-                        ></span>
-                        <span data-key="t-apps">Crop</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarCrop">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href={% url 'create_crop' %} class="nav-link" data-key="t-calendar">Create Crop </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href={% url 'display_crops' %} class="nav-link" data-key="t-chat"> Display Crops </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarFarm" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarFarm">
-                        <span class="mdi mdi-land-fields"
-                              style="scale: 1.5;margin-right: 10px;"
-                        ></span>
-                        <span data-key="t-apps">Farm</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarFarm">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href={% url 'create_farm' %} class="nav-link" data-key="t-calendar">Create Farm </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href={% url 'display_farms' %} class="nav-link" data-key="t-chat"> Display Farms </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarSeason" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarSeason">
-                        <i class="ri-calendar-line"></i> <span data-key="t-apps">Season</span>
+                        <span class="mdi mdi-account"
+                            style="scale: 1.5;margin-right: 10px;"
+                        ></span>
+                        </i> <span data-key="t-apps">Customer</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarSeason">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href={% url 'create_season' %} class="nav-link" data-key="t-calendar">Create
-                                    Season </a>
+                                <a href={% url 'create_customer_iceb' %} class="nav-link" data-key="t-calendar">
+                                    Create Customer
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href={% url 'display_season' %} class="nav-link" data-key="t-chat"> Display
-                                    Seasons </a>
+                                <a href={% url 'display_customer_iceb' %} class="nav-link" data-key="t-chat">
+                                    Display
+                                    Customer
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -129,36 +97,22 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarExpense" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarExpense">
-                        <i class="ri-wallet-3-line"></i> <span data-key="t-apps">Expense</span>
+                        <span class="mdi mdi-truck-delivery"
+                              style="scale: 1.5; margin-right: 10px;"
+                        ></span>
+                        <span data-key="t-apps">Delivery</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarExpense">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href={% url 'create_season_expense' %} class="nav-link" data-key="t-calendar">Create
-                                    Expenses </a>
+                                <a href={% url 'create_delivery_iceb' %} class="nav-link" data-key="t-calendar">
+                                    Create Delivery
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href={% url 'display_expense' %} class="nav-link" data-key="t-chat"> Display
-                                    Expenses </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarExpenseType" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarExpenseType">
-                        <i class="ri-money-euro-circle-line"></i> <span data-key="t-apps">Expense Type</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarExpenseType">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href={% url 'create_expense_type' %} class="nav-link" data-key="t-calendar">
-                                    Create Expenses Type </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href={% url 'display_expense_type' %} class="nav-link" data-key="t-chat">
-                                    Display
-                                    Expenses Type </a>
+                                <a href={% url 'display_delivery_iceb' %} class="nav-link" data-key="t-chat">
+                                    Display Delivery
+                                </a>
                             </li>
                         </ul>
                     </div>

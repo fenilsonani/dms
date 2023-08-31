@@ -1,4 +1,4 @@
-{% extends 'core/sidebarfarming.html' %}
+{% extends 'core/sidebarmanageuser.html' %}
 <html>
 <head>
     <title>Add User into the System</title>
@@ -11,9 +11,16 @@
 {% block content %}
     {% if message %}
         <p>
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        </p>
+    {% endif %}
+    {% if error %}
+        <p>
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
         </p>
     {% endif %}
     <form method="post">

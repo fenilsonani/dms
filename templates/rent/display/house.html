@@ -1,25 +1,77 @@
-<table>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>address</th>
-        <td>
-            Actions
-        </td>
-    </tr>
-    </thead>
-    <tbody>
-    {% for house in houses %}
-        <tr>
-            <td>{{ house.id }}</td>
-            <td>{{ house.name }}</td>
-            <td>{{ house.address }}</td>
-            <td>
-                <a href="{% url 'edit_house' house.id %}">edit</a>
-                <a href="{% url 'delete_house' house.id %}">delete</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#<table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>id</th>#}
+{#        <th>name</th>#}
+{#        <th>address</th>#}
+{#        <td>#}
+{#            Actions#}
+{#        </td>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for house in houses %}#}
+{#        <tr>#}
+{#            <td>{{ house.id }}</td>#}
+{#            <td>{{ house.name }}</td>#}
+{#            <td>{{ house.address }}</td>#}
+{#            <td>#}
+{#                <a href="{% url 'edit_house' house.id %}">edit</a>#}
+{#                <a href="{% url 'delete_house' house.id %}">delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+
+
+{% extends 'core/sidebarrent.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display</title>
+</head>
+<body>
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-nowrap">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for house in houses %}
+                    <tr>
+                        <th scope="row"><a href="#" class="fw-semibold">{{ house.id }}</a></th>
+                        <td>{{ house.name }}</td>
+                        <td>{{ house.address }}</td>
+                        <td>
+                            <a href={% url 'edit_crop' house.id %}>Edit</a> |
+                            <a href={% url 'delete_crop' house.id %}>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end col -->
+    </div>
+{% endblock %}
+</body>
+</html>
+

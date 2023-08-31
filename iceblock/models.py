@@ -21,12 +21,6 @@ class Delivery(models.Model):
     additional_transportation_charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     total_charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
-    @property
-    def final_price(self):
-        if self.additional_transportation_charge is None:
-            return self.total_ice_block_price
-        return self.total_ice_block_price + self.additional_transportation_charge
-
     def __str__(self):
         return f"Delivery for {self.customer} on {self.date}"
 

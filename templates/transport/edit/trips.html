@@ -1,5 +1,118 @@
-<form method="post">
-    {% csrf_token %}
-    {{ trip_form.as_p }}
-    <input type="submit" value="submit">
-</form>
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ trip_form.as_p }}#}
+{#    <input type="submit" value="submit">#}
+{#</form>#}
+{#<html>#}
+{#<head>#}
+{#    <title> Add Farm</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>#}
+{#   Add Farm#}
+{#</h1>#}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{#<html>#}
+{#<head>#}
+{#    <title> Add Crop</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>#}
+{#    Add Crop#}
+{#</h1>#}
+{#{% if message %}#}
+{#    <p>{{ message }}</p>#}
+{#{% endif %}#}
+{##}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input name="submit" type="submit" value="Submit">#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+{% extends 'core/sidebartransport.html' %}
+<html>
+<head>
+    <title>Add Farm Into The System</title>
+</head>
+<body>
+<h1>
+    Add Farm
+</h1>
+
+{% block content %}
+    {% if message %}
+        <p>
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        </p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {#    {{ form.as_p }}#}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 m-5">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Starting Km</label>
+                        <input type="text" class="form-control" id="starting_km" name="starting_km"
+                               value="{{ trip_form.starting_km.value }}"
+                               placeholder="Enter Starting Km">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Ending Km</label>
+                        <input type="text" class="form-control" id="ending_km" name="ending_km"
+                               value="{{ trip_form.ending_km.value }}"
+                               placeholder="Enter Ending Km">
+                    </div>
+                     <div class="mb-3">
+                        <label for="location" class="form-label">Money Collected</label>
+                        <input type="text" class="form-control" id="money_collected" name="money_collected"
+                               value="{{ trip_form.money_collected.value }}"
+                               placeholder="Enter Money Collected">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Is Online Payment</label>
+                        {{ trip_form.is_online_payment }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Transection Id</label>
+                        <input type="text" class="form-control" id="transaction_id" name="transaction_id"
+                               value="{{ trip_form.expenses.value }}"
+                               placeholder="Enter Transaction Id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Expenses</label>
+                        <input type="text" class="form-control" id="expenses" name="expenses"
+                               value="{{ trip_form.expenses.value }}"
+                               placeholder="Enter Expenses">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Diesel</label>
+                        <input type="text" class="form-control" id="diesel" name="diesel"
+                               value="{{ trip_form.expenses.value }}"
+                               placeholder="Enter Diesel">
+                    </div>
+                    <button type="submit" class="btn-primary waves-effect btn waves-light">Add Farm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+</body>
+</html>
