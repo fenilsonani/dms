@@ -8,6 +8,7 @@ from milkfarm.models import DailyProduction, Expense
 from users.forms import NormalUserForm, RegisterForm
 from users.is_admin import is_admin
 from users.models import NormalUser, Business
+from rent.models import House,RentPayment,RentalPerson
 
 
 # Create your views here.
@@ -80,8 +81,11 @@ def dashboard(request):
                 return render(request, 'dashboard/admin_dash_iceb.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})
             elif business == "rent":
+                house_length=len(House.objects.all())
+
                 return render(request, 'dashboard/admin_dash_rent.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users})
+                              {'usertype': 'Admin', 'business': business, 'users': users,
+                               })
             else:
                 return render(request, 'dashboard/admin_dash.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})

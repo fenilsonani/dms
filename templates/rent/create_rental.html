@@ -36,29 +36,32 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">House : </label>
                         <select name="house" id="house" class="form-control">
-                            {% for house in form.house %}
+                            {% for house in form_payment_method %}
                                 {{ house }}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Rent Amount : </label>
-                        <input type="text" class="form-control" id="rent_amount" name="rent_amount"
-                                  placeholder="Enter Amount">
+                        <label for="amount_pending" class="form-label">Amount Paid : </label>
+                        <input type="text" class="form-control" id="amount_pending" name="amount_pending"
+                               value="{{ form.amount_pending.value }}"
+                               placeholder="Enter Amount Paid Till Now">
                     </div>
                     <div class="mb-3">
-                        <label for="rent_paid" class="form-label">Rent Paid : </label>
-                        {{ form.rent_paid }}
+                        <label for="amount_paid" class="form-label">Rent Paid : </label>
+                        <input value="{{ form.amount_paid.value }}" type="text" class="form-control" id="amount_paid"
+                               name="amount_paid"
+                               placeholder="Enter Rent Paid">
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Tenant Amount : </label>
-                        <input type="text" class="form-control" id="tenant_name" name="tenant_name"
-                                  placeholder="Enter Amount">
+                        <label for="name" class="form-label">Name : </label>
+                        <input type="text" class="form-control" id="name" name="name"
+                               placeholder="Enter Amount Name">
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Mobile No : </label>
-                        <input type="text" class="form-control" id="mobile_number" name="mobile_number"
-                                  placeholder="Enter Number">
+                        <label for="phone_number" class="form-label">Phone No : </label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number"
+                               placeholder="Enter Number">
                     </div>
                     <button type="submit" class="btn-primary waves-effect btn waves-light">Add User</button>
                 </div>

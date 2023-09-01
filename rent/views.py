@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from .forms import RentalForm, HouseForm
-from .models import Rental, House
+from .forms import RentalPersonForm, RentPaymentForm, HouseForm
+from .models import RentalPerson, House, RentPayment
 
 
 # Create your views here.
@@ -26,7 +26,7 @@ def create_house(request):
 def create_rental(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            form = RentalForm(request.POST)
+            form = RentalPersonForm(request.POST)
             if form.is_valid():
                 form.save()
                 return render(request, 'rent/create_rental.html',
@@ -34,7 +34,7 @@ def create_rental(request):
             else:
                 return render(request, 'rent/create_rental.html', {'form': form, 'message': 'Rental creation failed.'})
         else:
-            form = RentalForm()
+            form = RentalPersonForm()
         return render(request, 'rent/create_rental.html', {'form': form})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
@@ -50,7 +50,7 @@ def display_house(request):
 
 def display_rental(request):
     if request.user.is_authenticated:
-        rentals = Rental.objects.all()
+        rentals = RentalPerson.objects.all()
         return render(request, 'rent/display/rental.html', {'rentals': rentals})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
@@ -75,9 +75,9 @@ def edit_house(request, id):
 
 def edit_rental(request, id):
     if request.user.is_authenticated:
-        rental = Rental.objects.get(id=id)
+        rental = RentalPerson.objects.get(id=id)
         if request.method == 'POST':
-            form = RentalForm(request.POST, instance=rental)
+            form = RentalPersonForm(request.POST, instance=rental)
             if form.is_valid():
                 form.save()
                 return render(request, 'rent/edit/rental.html',
@@ -85,7 +85,7 @@ def edit_rental(request, id):
             else:
                 return render(request, 'rent/edit/rental.html', {'form': form, 'message': 'Rental edit failed.'})
         else:
-            form = RentalForm(instance=rental)
+            form = RentalPersonForm(instance=rental)
             return render(request, 'rent/edit/rental.html', {'form': form})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
@@ -103,10 +103,67 @@ def delete_house(request, id):
 
 def delete_rental(request, id):
     if request.user.is_authenticated:
-        rental = Rental.objects.get(id=id)
+        rental = RentalPerson.objects.get(id=id)
         rental.delete()
-        rentals = Rental.objects.all()
+        rentals = RentalPerson.objects.all()
         return render(request, 'rent/display/rental.html',
                       {'message': 'Rental deleted successfully.', 'rentals': rentals})
+    else:
+        return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
+
+
+def add_rent_payment(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RentPaymentForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return render(request, 'rent/add_rent_payment.html',
+                              {'form': form, 'message': 'Rent payment added successfully.'})
+            else:
+                return render(request, 'rent/add_rent_payment.html',
+                              {'form': form, 'message': 'Rent payment addition failed.'})
+        else:
+            form = RentPaymentForm()
+            return render(request, 'rent/add_rent_payment.html', {'form': form})
+
+    else:
+        return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
+
+
+def display_rent_payment(request):
+    if request.user.is_authenticated:
+        rent_payments = RentPayment.objects.all()
+        return render(request, 'rent/display/rent_payment.html', {'rent_payments': rent_payments})
+    else:
+        return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
+
+
+def edit_rent_payment(request, id):
+    if request.user.is_authenticated:
+        rent_payment = RentPayment.objects.get(id=id)
+        if request.method == 'POST':
+            form = RentPaymentForm(request.POST, instance=rent_payment)
+            if form.is_valid():
+                form.save()
+                return render(request, 'rent/edit/rent_payment.html',
+                              {'form': form, 'message': 'Rent payment edited successfully.'})
+            else:
+                return render(request, 'rent/edit/rent_payment.html',
+                              {'form': form, 'message': 'Rent payment edit failed.'})
+        else:
+            form = RentPaymentForm(instance=rent_payment)
+            return render(request, 'rent/edit/rent_payment.html', {'form': form})
+    else:
+        return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
+
+
+def delete_rent_payment(request, id):
+    if request.user.is_authenticated:
+        rent_payment = RentPayment.objects.get(id=id)
+        rent_payment.delete()
+        rent_payments = RentPayment.objects.all()
+        return render(request, 'rent/display/rent_payment.html',
+                      {'message': 'Rent payment deleted successfully.', 'rent_payments': rent_payments})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})

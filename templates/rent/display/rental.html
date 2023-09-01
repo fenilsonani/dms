@@ -60,10 +60,10 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">House</th>
-                    <th scope="col">Rent Amount</th>
-                    <th scope="col">Rent Paid</th>
-                    <th scope="col">Tenant Amount</th>
-                    <th scope="col">Mobile No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone no</th>
+                    <th scope="col">Amount Paid Till Now</th>
+                    <th scope="col">Amount Pending.</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -72,10 +72,10 @@
                     <tr>
                         <th scope="row"><a href="#" class="fw-semibold">{{ rental.id }}</a></th>
                         <td>{{ rental.house }}</td>
-                        <td>{{ rental.rent_amount }}</td>
-                        <td>{{ rental.rent_paid }}</td>
-                        <td>{{ rental.tenant_name }}</td>
-                        <td>{{ rental.mobile_number }}</td>
+                        <td>{{ rental.name }}</td>
+                        <td>{{ rental.phone_number }}</td>
+                        <td>{{ rental.amount_paid }}</td>
+                        <td>{{ rental.amount_pending }}</td>
                         <td>
                             <a href={% url 'edit_rental' rental.id %}>Edit</a> |
                             <a href={% url 'delete_rental' rental.id %}>Delete</a>
