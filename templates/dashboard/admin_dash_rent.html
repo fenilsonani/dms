@@ -74,6 +74,33 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Number Of Rents Person
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ rp_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_rental' %} class="text-decoration-underline">View Rents</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                            <span class="mdi text-primary mdi-account-hard-hat"
+                                                                  style="scale: 1.5;"
+                                                            ></span>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
                             <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Number Of Rents
                                 Collected</p>
                         </div>
@@ -81,7 +108,7 @@
                     <div class="d-flex align-items-end justify-content-between mt-4">
                         <div>
                             <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                                                  data-target="{{ rental_length }}">0</span>
+                                                                                  data-target="{{ rpayment_length }}">0</span>
                             </h4>
                             <a href={% url 'display_rental' %} class="text-decoration-underline">View Rents</a>
                         </div>
@@ -159,49 +186,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Average Rent by Property</h4>
-                </div>
-                <div class="card-body">
-                    <canvas id="averageRentChart" class="chartjs-chart"></canvas>
-                </div>
-            </div>
-        </div> <!-- end col -->
     </div>
     <div>
         <script src={% static 'libs/chart.js/chart.umd.js' %}></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var houseNames = {{ house_names|safe }};
-                var averageRents = {{ average_rents|safe }};
-
-                var ctx = document.getElementById('averageRentChart').getContext('2d');
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: houseNames,
-                        datasets: [{
-                            label: 'Average Rent Amount',
-                            data: averageRents,
-                            backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            });
-
-        </script>
     </div>
     <a href={% url 'logout' %}>Logout</a>
 {% endblock %}

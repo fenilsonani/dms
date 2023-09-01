@@ -5,10 +5,10 @@ from django.shortcuts import render
 
 from milkfarm.models import Customer, Labor, Animal
 from milkfarm.models import DailyProduction, Expense
+from rent.models import House, RentPayment, RentalPerson
 from users.forms import NormalUserForm, RegisterForm
 from users.is_admin import is_admin
 from users.models import NormalUser, Business
-from rent.models import House,RentPayment,RentalPerson
 
 
 # Create your views here.
@@ -81,10 +81,13 @@ def dashboard(request):
                 return render(request, 'dashboard/admin_dash_iceb.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})
             elif business == "rent":
-                house_length=len(House.objects.all())
-
+                house_length = len(House.objects.all())
+                rp_length = len(RentalPerson.objects.all())
+                rpayment_length = len(RentPayment.objects.all())
+                emp_length=len(users.all())
                 return render(request, 'dashboard/admin_dash_rent.html',
                               {'usertype': 'Admin', 'business': business, 'users': users,
+                               'house_length': house_length, 'rpayment_length': rpayment_length, 'rp_length': rp_length,'emp_length':emp_length
                                })
             else:
                 return render(request, 'dashboard/admin_dash.html',
