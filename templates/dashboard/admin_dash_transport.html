@@ -1,47 +1,315 @@
-{#check if the user business is farming#}
 {% extends 'core/sidebartransport.html' %}
-{% load i18n %}
 
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Create Normal User</title>
+    <title>Transport</title>
 </head>
 <body>
 {% block content %}
     <h1>Welcome {{ usertype }}</h1>
     <h1>{{ business }}</h1>
     <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-nowrap">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
-                    <tr>
-                        <th scope="row"><a href="#" class="fw-semibold">{{ user.id }}</a></th>
-                        <td>{{ user.user }}</td>
-                        <td>{{ user.field_names }}</td>
-                        <td>{{ user.last_name }}</td>
-                        <td>
-                            Coming Soon
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Trips</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ trips_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_house' %} class="text-decoration-underline">View
+                                Trips</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                           <span class="mdi mdi-table-account text-primary"
+                                 style="scale: 1.5;"
+                           ></span>
+                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Employees</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ emp_length }}">0</span>
+                            </h4>
+                            <a href="" class="text-decoration-underline">View Employee</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
+                                                            <i class="ri-user-line text-info"></i>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Number Of Expense Made
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ expense_type_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_rental' %} class="text-decoration-underline">View Rents</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                            <span class="mdi text-primary mdi-account-hard-hat"
+                                                                  style="scale: 1.5;"
+                                                            ></span>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Expense Type
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ expense_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_rental' %} class="text-decoration-underline">View Rents</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                            <span class="mdi text-primary mdi-account-hard-hat"
+                                                                  style="scale: 1.5;"
+                                                            ></span>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">
+                        Employee
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <th scope="row"><a href="#" class="fw-semibold">{{ user.id }}</a></th>
+                                <td>{{ user.user }}</td>
+                                <td>
+                                    Coming Soon
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!-- end col -->
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Expenses by Day Category</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
+
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Expenses by Day</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="expenseChart1"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Number Of Trips</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="tripsCountChart"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+    <div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            var ctx = document.getElementById('expenseChart').getContext('2d');
+            var data = {
+                labels: [{% for expense in expenses %}"{{ expense.name }}",{% endfor %}],
+                datasets: [{
+                    label: 'Amount',
+                    data: [{% for expense in expenses %}{{ expense.amount }}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        // Add more colors as needed
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        // Add more colors as needed
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var options = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+        </script>
+        <script>
+            var ctx = document.getElementById('expenseChart1').getContext('2d');
+            var data = {
+                labels: [{% for expense in expenses_grouped %}"{{ expense.date }}",{% endfor %}],
+                datasets: [{
+                    label: 'Total Amount',
+                    data: [{% for expense in expenses_grouped %}{{ expense.total_amount }}, {% endfor %}],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var options = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+
+            var ctx = document.getElementById('tripsCountChart').getContext('2d');
+
+            var data = {
+                labels: [{% for trip in trips_count %}"{{ trip.date }}",{% endfor %}],
+                datasets: [{
+                    label: 'Number of Trips',
+                    data: [{% for trip in trips_count %}{{ trip.num_trips }}, {% endfor %}],
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                }]
+            };
+
+            var options1 = {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'MMM D',
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date',
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Trips',
+                        },
+                    },
+                },
+            };
+
+            var myChart1 = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
+            });
+
+        </script>
+
+
     </div>
     <a href={% url 'logout' %}>Logout</a>
 {% endblock %}
 </body>
 </html>
-

@@ -51,10 +51,15 @@ def add_expense(request):
                 expense = expense_form.save()
                 # Do something with the saved expense object
                 #         add message to context
-                context = {'expense_form': expense_form}
+                message = 'Expense added successfully'
+                context = {'expense_form': expense_form,
+                           'message': message
+                           }
                 return render(request, 'transport/add_expense.html', context)
         else:
             expense_form = TransportExpensesForm()
+            error = expense_form.errors
+            context = {'expense_form': expense_form, 'error': error, 'message': 'Expense not added'}
 
         context = {'expense_form': expense_form}
         return render(request, 'transport/add_expense.html', context)
