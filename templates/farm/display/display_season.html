@@ -92,75 +92,98 @@
         </div>
         </p>
     {% endif %}
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-nowrap">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Farm</th>
-                    <th scope="col">Crop</th>
-                    <th scope="col">Starting Date</th>
-                    <th scope="col">
-                        Harvested Crop Amount
-                    </th>
-                    <th scope="col">
-                        Harvested Crop Price Per Unit
-                    </th>
-                    <th scope="col">
-                        First Payment Amount
-                    </th>
-                    <th>
-                        Second Payment Amount
-                    </th>
-                    <th scope="col">Actions</th>
+    <div class="card m-3">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h4 class="card-title">Seasons</h4>
+                </div>
+                <div>
+                    <form method="post" class="d-flex gap-5 h-auto">
+                        {% csrf_token %}
+                        <label for="export_format">Select Export Format:</label>
+                        <select name="export_format" class="form-control w-100" id="export_format">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Export</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
 
-                </tr>
-                </thead>
-                <tbody>
-                {% for season in seasons %}
-                    <tr>
-                        <td>
-                            {{ season.id }}
-                        </td>
-                        <td>
-                            {{ season.name }}
-                        </td>
-                        <td>
-                            {{ season.farm.name }}
-                        </td>
-                        <td>
-                            {{ season.crop.name }}
-                        </td>
-                        <td>
-                            {{ season.starting_date }}
-                        </td>
-                        <td>
-                            {{ season.harvested_crop_amount_tons }}
-                        </td>
-                        <td>
-                            {{ season.harvested_crop_price_per_ton }}
-                        </td>
-                        </td>
-                        <td>
-                            {{ season.first_payment }}
-                        </td>
-                        <td>
-                            {{ season.second_payment }}
-                        </td>
-                        <td>
-                            <a href={% url 'edit_season' season.id %}>
-                                Update
-                            </a> |
-                            <a href={% url 'delete_season' season.id %}>
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Farm</th>
+                            <th scope="col">Crop</th>
+                            <th scope="col">Starting Date</th>
+                            <th scope="col">
+                                Harvested Crop Amount
+                            </th>
+                            <th scope="col">
+                                Harvested Crop Price Per Unit
+                            </th>
+                            <th scope="col">
+                                First Payment Amount
+                            </th>
+                            <th>
+                                Second Payment Amount
+                            </th>
+                            <th scope="col">Actions</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for season in seasons %}
+                            <tr>
+                                <td>
+                                    {{ season.id }}
+                                </td>
+                                <td>
+                                    {{ season.name }}
+                                </td>
+                                <td>
+                                    {{ season.farm.name }}
+                                </td>
+                                <td>
+                                    {{ season.crop.name }}
+                                </td>
+                                <td>
+                                    {{ season.starting_date }}
+                                </td>
+                                <td>
+                                    {{ season.harvested_crop_amount_tons }}
+                                </td>
+                                <td>
+                                    {{ season.harvested_crop_price_per_ton }}
+                                </td>
+                                </td>
+                                <td>
+                                    {{ season.first_payment }}
+                                </td>
+                                <td>
+                                    {{ season.second_payment }}
+                                </td>
+                                <td>
+                                    <a href={% url 'edit_season' season.id %}>
+                                        Update
+                                    </a> |
+                                    <a href={% url 'delete_season' season.id %}>
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <!-- end col -->
     </div>
