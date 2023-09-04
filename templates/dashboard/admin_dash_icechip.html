@@ -83,7 +83,8 @@
                             <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
                                                                                   data-target="{{ delivery_length }}">0</span>
                             </h4>
-                            <a href={% url 'display_delivery_icechip' %} class="text-decoration-underline">View Delivery</a>
+                            <a href={% url 'display_delivery_icechip' %} class="text-decoration-underline">View
+                                Delivery</a>
                         </div>
                         <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-primary-subtle rounded fs-3">
@@ -130,11 +131,111 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Number Of Delivery Chart</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="deliveryChart" class="chartjs-chart"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Block Delivery Chart</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="iceBlockChart" class="chartjs-chart"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
     </div>
     <div>
         <script src={% static 'libs/chart.js/chart.umd.js' %}></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const labels = {{ labels|safe }};
+                const data = {{ data|safe }};
+
+                const ctx = document.getElementById('deliveryChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Number of Deliveries',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Deliveries'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const labels = {{ labels1|safe }};
+                const data = {{ data1|safe }};
+
+                const ctx = document.getElementById('iceBlockChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Ice Blocks Delivered',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Total Ice Blocks Delivered'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+        </script>
     </div>
-    <a href={% url 'logout' %}>Logout</a>
+    <a href={% url 'logout' %}><button class="btn btn-primary">Logout</button></a>
 {% endblock %}
 </body>
 </html>

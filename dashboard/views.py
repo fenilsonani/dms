@@ -10,10 +10,10 @@ from iceblock.models import Customer as IceCustomer
 from iceblock.models import Delivery as IceDelivery
 from icechip.models import Customer as IceChipCustomer
 from icechip.models import Delivery as IceChipDelivery
-from rowater.models import Customer as RowaterCustomer
 from milkfarm.models import Customer, Labor, Animal
 from milkfarm.models import DailyProduction, Expense
 from rent.models import House, RentPayment, RentalPerson
+from rowater.models import Customer as RowaterCustomer
 from rowater.models import Delivery as RowaterDelivery
 from transport.models import Expense as transportExpense
 from transport.models import TransportExpenses, Trips
@@ -198,22 +198,70 @@ def dashboard(request):
                                'emp_length': emp_length
                                })
             elif business == "rowater":
+                one_week_ago = date.today() - timedelta(days=7)
                 emp_length = len(users.all())
                 customer_length = len(RowaterCustomer.objects.all())
                 delivery_length = len(RowaterDelivery.objects.all())
+                delivery_data = (
+                    RowaterCustomer.objects
+                    .filter(date__gte=one_week_ago)
+                    .values('date')
+                    .annotate(total_deliveries=Count('id'))
+                    .order_by('date')
+                )
+                labels = [str(item['date']) for item in delivery_data]
+                data = [item['total_deliveries'] for item in delivery_data]
+                delivery_data1 = (
+                    RowaterDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                    .order_by('date')
+                )
+                labels1 = [str(item['date']) for item in delivery_data1]
+                data1 = [item['total_ice_blocks'] for item in delivery_data1]
+
                 return render(request, 'dashboard/admin_dash_rowater.html',
                               {'usertype': 'Admin', 'business': business, 'users': users,
                                'customer_length': customer_length, 'delivery_length': delivery_length,
-                               'emp_length': emp_length
+                               'emp_length': emp_length,
+                               'labels': labels,
+                               'data': data,
+                               'labels1': labels1,
+                               'data1': data1
+
                                })
             elif business == "icechip":
                 emp_length = len(users.all())
                 customer_length = len(IceChipCustomer.objects.all())
                 delivery_length = len(IceChipDelivery.objects.all())
+                one_week_ago = date.today() - timedelta(days=7)
+                delivery_data = (
+                    IceChipDelivery.objects
+                    .filter(date__gte=one_week_ago)
+                    .values('date')
+                    .annotate(total_deliveries=Count('id'))
+                    .order_by('date')
+                )
+                labels = [str(item['date']) for item in delivery_data]
+                data = [item['total_deliveries'] for item in delivery_data]
+                delivery_data1 = (
+                    IceChipDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                    .order_by('date')
+                )
+                labels1 = [str(item['date']) for item in delivery_data1]
+                data1 = [item['total_ice_blocks'] for item in delivery_data1]
                 return render(request, 'dashboard/admin_dash_icechip.html',
                               {'usertype': 'Admin', 'business': business, 'users': users,
                                'customer_length': customer_length, 'delivery_length': delivery_length,
-                               'emp_length': emp_length
+                               'emp_length': emp_length,
+                               'labels': labels,
+                               'data': data,
+                               'labels1': labels1,
+                               'data1': data1
                                })
             else:
                 return render(request, 'dashboard/admin_dash.html',

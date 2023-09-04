@@ -44,36 +44,37 @@
     {% include 'core/cssloads.html' %}
 </head>
 <body>
+<!-- Default Toast -->
+{% if error_message %}
+    <div class="toast fade show" role="alert" aria-live="assertive"
+         data-bs-autohide="false" aria-atomic="true">
+        <div class="toast-header">
+            <span class="fw-semibold me-auto">Sign in error</span>
+            <small>0:0 minutes</small>
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ error_message }}
+        </div>
+    </div>
+{% endif %}
+{% if message %}
+    <div class="toast fade show" role="alert" aria-live="assertive"
+         data-bs-autohide="false" aria-atomic="true">
+        <div class="toast-header">
+            <span class="fw-semibold me-auto">Sign in error</span>
+            <small>0:0 minutes</small>
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ message }}
+        </div>
+    </div>
+{% endif %}
 <div class="auth-page-wrapper pt-5">
-    <!-- Default Toast -->
-    {% if error_message %}
-        <div class="toast fade show" role="alert" aria-live="assertive"
-             data-bs-autohide="false" aria-atomic="true">
-            <div class="toast-header">
-                <span class="fw-semibold me-auto">Sign in error</span>
-                <small>0:0 minutes</small>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ error_message }}
-            </div>
-        </div>
-    {% endif %}
-    {% if message %}
-        <div class="toast fade show" role="alert" aria-live="assertive"
-             data-bs-autohide="false" aria-atomic="true">
-            <div class="toast-header">
-                <span class="fw-semibold me-auto">Sign in error</span>
-                <small>0:0 minutes</small>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ message }}
-            </div>
-        </div>
-    {% endif %}
+
     <!-- auth page bg -->
     <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
         <div class="bg-overlay"></div>
