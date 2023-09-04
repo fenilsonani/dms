@@ -49,20 +49,19 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Name : </label>
                         <input type="text" class="form-control" id="name" name="name"
-                               value="{{ form.customer.name }}"
+                               value="{{ form.name.value }}"
                                placeholder="Enter Customer Name">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address : </label>
                         <textarea type="text" rows="3" class="form-control" id="address" name="address"
-                                  value="{{ form.customer.address }}"
                                   placeholder="Enter Address">
                         </textarea>
                     </div>
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number : </label>
                         <input type="text" class="form-control" id="phone_number" name="phone_number"
-                               value="{{ form.customer.phone_number }}"
+                               value="{{ form.phone_number.value }}"
                                placeholder="Enter Phone Number">
                     </div>
                     <button type="submit" class="btn-primary waves-effect btn waves-light">Add Customer</button>
@@ -70,6 +69,10 @@
             </div>
         </div>
     </form>
+    <script>
+        let address = document.getElementById('address');
+        address.innerHTML = "{{ form.address.value }}";
+    </script>
 {% endblock %}
 </body>
 </html>

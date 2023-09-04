@@ -122,7 +122,9 @@
     </form>
 
     <script>
-        let one_ice_block_price = document.getElementById('one_ice_block_price');
+
+            let
+        one_ice_block_price = document.getElementById('one_ice_block_price');
         let daily_ice_block_given = document.getElementById('daily_ice_block_given');
         let total_ice_block_price = document.getElementById('total_ice_block_price');
         let additional_transportation_charge = document.getElementById('additional_transportation_charge');
@@ -141,6 +143,7 @@
         additional_transportation_charge.addEventListener('change', function () {
             total_charge.value = parseInt(total_ice_block_price.value) + parseInt(additional_transportation_charge.value);
         });
+
     </script>
 {% endblock %}
 </body>
