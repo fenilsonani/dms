@@ -30,5 +30,6 @@ urlpatterns = [
     path('dashboard/rent/', include('rent.urls')),
     path('dashboard/milk/', include('milkfarm.urls')),
     path('dashboard/icechip/', include('icechip.urls')),
+    path('dashboard/rowater/', include('rowater.urls')),
     path('comming_soon/', views.comming_soon, name='comming_soon'),
 ]

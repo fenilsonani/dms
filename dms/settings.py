@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'iceblock',
     'rent',
     'milkfarm',
-    'icechip'
+    'icechip',
+    'rowater'
 ]
 
 MIDDLEWARE = [
