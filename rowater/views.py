@@ -1,9 +1,7 @@
 import csv
-
 from django.http import HttpResponse
 from django.shortcuts import render
 from reportlab.pdfgen import canvas
-
 from .forms import CustomerForm, DeliveryForm, Customer, Delivery
 
 
