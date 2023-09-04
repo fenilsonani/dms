@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+
 from . import views
 
 urlpatterns = [
@@ -28,5 +29,6 @@ urlpatterns = [
     path('dashboard/iceblock/', include('iceblock.urls')),
     path('dashboard/rent/', include('rent.urls')),
     path('dashboard/milk/', include('milkfarm.urls')),
+    path('dashboard/icechip/', include('icechip.urls')),
     path('comming_soon/', views.comming_soon, name='comming_soon'),
 ]

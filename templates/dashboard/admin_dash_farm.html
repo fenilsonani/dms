@@ -1,0 +1,268 @@
+{% extends 'core/sidebarfarming.html' %}
+
+<html>
+<head>
+    <title>Ice Block</title>
+</head>
+<body>
+{% block content %}
+    <h1>Welcome {{ usertype }}</h1>
+    <h1>{{ business }}</h1>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Farm</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ farm_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_farms' %} class="text-decoration-underline">View
+                                Farms</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                           <span class="mdi mdi-table-account text-primary"
+                                 style="scale: 1.5;"
+                           ></span>
+                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Employees</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ emp_length }}">0</span>
+                            </h4>
+                            <a href="" class="text-decoration-underline">View Employee</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
+                                                            <i class="ri-user-line text-info"></i>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Seasons
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ season_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_season' %} class="text-decoration-underline">View
+                                Seasons</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                            <span class="mdi text-primary mdi-account-hard-hat"
+                                                                  style="scale: 1.5;"
+                                                            ></span>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Crops
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between mt-4">
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                                                  data-target="{{ crop_length }}">0</span>
+                            </h4>
+                            <a href={% url 'display_season' %} class="text-decoration-underline">View
+                                Crop</a>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                            <span class="mdi text-primary mdi-account-hard-hat"
+                                                                  style="scale: 1.5;"
+                                                            ></span>
+                                                        </span>
+                        </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">
+                        Employee
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <th scope="row"><a href="#" class="fw-semibold">{{ user.id }}</a></th>
+                                <td>{{ user.user }}</td>
+                                <td>
+                                    Coming Soon
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Expenses Chart</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </div>
+        </div> <!-- end col -->
+
+    </div>
+{#    <div class="row">#}
+{#        <div class="col-xl-6">#}
+{#            <div class="card">#}
+{#                <div class="card-header">#}
+{#                    <h4 class="card-title mb-0">Expenses by Day</h4>#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <canvas id="cropAmountChart"></canvas>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div> <!-- end col -->#}
+{#        <div class="col-xl-6">#}
+{#            <div class="card">#}
+{#                <div class="card-header">#}
+{#                    <h4 class="card-title mb-0">Number Of Delivery</h4>#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <canvas id="deliveryChart"></canvas>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div> <!-- end col -->#}
+{#    </div>#}
+    <div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Get the data passed from the view
+            var seasons = {{ seasons|safe }};
+            var harvestedCropAmounts = {{ harvested_crop_amounts|safe }};
+            var expenseCategories = {{ expense_categories|safe }};
+            var expenseData = {{ expense_data|safe }};
+            // Create Harvested Crop Amount chart using Chart.js
+            var cropAmountCtx = document.getElementById('cropAmountChart').getContext('2d');
+            var cropAmountChart = new Chart(cropAmountCtx, {
+                type: 'bar',
+                data: {
+                    labels: seasons.map(season => season.crop.name),
+                    datasets: [{
+                        label: 'Harvested Crop Amount (Tons)',
+                        data: harvestedCropAmounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount (Tons)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Crop Season'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Create Season Expenses chart using Chart.js
+            var expenseCtx = document.getElementById('expenseChart').getContext('2d');
+            var expenseChart = new Chart(expenseCtx, {
+                type: 'bar',
+                data: {
+                    labels: seasons.map(season => season.crop.name),
+                    datasets: expenseCategories.map(category => ({
+                        label: category[1],
+                        data: expenseData[category[0]],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }))
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Expense'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Crop Season'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <a href={% url 'logout' %}>Logout</a>
+{% endblock %}
+</body>
+</html>

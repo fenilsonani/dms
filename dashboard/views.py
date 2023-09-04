@@ -38,13 +38,36 @@ def dashboard(request):
                 crop_length = len(Crop.objects.all())
                 expense_length = len(Expense.objects.all())
                 season_expense_length = len(SeasonExpense.objects.all())
+                seasons = Season.objects.all()
+
+                # Data for harvested crop amount chart
+                harvested_crop_amounts = [season.harvested_crop_amount_tons for season in seasons]
+
+                # Data for expenses chart
+                expense_categories = Season.EXPENSE_CHOICES
+                expense_data = {}
+
+                for category, _ in expense_categories:
+                    expense_data[category] = []
+
+                for category, _ in expense_categories:
+                    for season in seasons:
+                        total_expense = \
+                            season.seasonexpense_set.filter(expense__name=category).aggregate(total=Sum('amount'))[
+                                'total'] or 0
+                        expense_data[category].append(total_expense)
+                print(expense_data)
                 contex = {
                     'usertype': 'Admin', 'business': business, 'users': users,
                     'emp_length': emp_length, 'farm_length': farm_length,
                     'season_length': season_length, 'crop_length': crop_length,
-                    'expense_length': expense_length, 'season_expense_length': season_expense_length
+                    'expense_length': expense_length, 'season_expense_length': season_expense_length,
+                    'seasons': seasons,
+                    'harvested_crop_amounts': harvested_crop_amounts,
+                    'expense_categories': expense_categories,
+                    'expense_data': expense_data,
                 }
-                return render(request, 'dashboard/admin_dash.html',
+                return render(request, 'dashboard/admin_dash_farm.html',
                               contex)
             elif business == "milk":
                 customer_length = len(Customer.objects.all())
