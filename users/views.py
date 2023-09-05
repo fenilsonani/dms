@@ -48,7 +48,7 @@ def login_normal(request):
             try:
                 normal_user = NormalUser.objects.get(user=user, business=business)
                 login(request, user)
-                return HttpResponseRedirect("Authenticated")
+                return redirect(dashboard)
             except NormalUser.DoesNotExist:
                 return render(request, 'users/login_normal.html', {'error_message': 'User is not a normal user'})
         else:

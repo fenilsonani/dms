@@ -3,7 +3,7 @@ from collections import defaultdict
 from datetime import date, timedelta
 
 from django.db.models import Sum, Count
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from farm.models import Farm, Season, SeasonExpense, Crop
 from iceblock.models import Customer as IceCustomer
@@ -62,7 +62,7 @@ def dashboard(request):
                         expense_data[category].append(total_expense)
                 print(expense_data)
                 contex = {
-                    'usertype': 'Admin', 'business': business, 'users': users,
+                    'usertype': 'Admin', 'business': business,
                     'emp_length': emp_length, 'farm_length': farm_length,
                     'season_length': season_length, 'crop_length': crop_length,
                     'expense_length': expense_length, 'season_expense_length': season_expense_length,
@@ -111,7 +111,7 @@ def dashboard(request):
                 line_data = [expenses_by_month.get(month, 0) for month in range(1, 13)]
 
                 return render(request, 'dashboard/admin_dash_milk.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users,
+                              {'usertype': 'Admin', 'business': business,
                                'customer_length': customer_length, 'emp_length': emp_length,
                                'labor_length': labor_length, 'animal_length': animal_length,
                                'chart_label': chart_label,
@@ -131,7 +131,7 @@ def dashboard(request):
                     total_amount=Sum('amount')).order_by('date')
                 trips_count = Trips.objects.values('date').annotate(num_trips=Count('id')).order_by('date')
                 return render(request, 'dashboard/admin_dash_transport.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users,
+                              {'usertype': 'Admin', 'business': business,
                                'expense_type_length': expense_type_length, 'expense_length': expense_length,
                                'trips_length': trips_length, 'emp_length': emp_length,
                                'expenses': expenses, 'expenses_grouped': expenses_grouped,
@@ -178,7 +178,7 @@ def dashboard(request):
                 print(data2)
 
                 contex = {
-                    'usertype': 'Admin', 'business': business, 'users': users,
+                    'usertype': 'Admin', 'business': business,
                     'customer_length': customer_length, 'emp_length': emp_length,
                     'total_delivery': total_delivery,
                     'labels': labels, 'data': data,
@@ -193,7 +193,7 @@ def dashboard(request):
                 rpayment_length = len(RentPayment.objects.all())
                 emp_length = len(users.all())
                 return render(request, 'dashboard/admin_dash_rent.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users,
+                              {'usertype': 'Admin', 'business': business,
                                'house_length': house_length, 'rpayment_length': rpayment_length, 'rp_length': rp_length,
                                'emp_length': emp_length
                                })
@@ -222,7 +222,7 @@ def dashboard(request):
                 data1 = [item['total_ice_blocks'] for item in delivery_data1]
 
                 return render(request, 'dashboard/admin_dash_rowater.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users,
+                              {'usertype': 'Admin', 'business': business,
                                'customer_length': customer_length, 'delivery_length': delivery_length,
                                'emp_length': emp_length,
                                'labels': labels,
@@ -255,7 +255,7 @@ def dashboard(request):
                 labels1 = [str(item['date']) for item in delivery_data1]
                 data1 = [item['total_ice_blocks'] for item in delivery_data1]
                 return render(request, 'dashboard/admin_dash_icechip.html',
-                              {'usertype': 'Admin', 'business': business, 'users': users,
+                              {'usertype': 'Admin', 'business': business,
                                'customer_length': customer_length, 'delivery_length': delivery_length,
                                'emp_length': emp_length,
                                'labels': labels,
@@ -267,7 +267,33 @@ def dashboard(request):
                 return render(request, 'dashboard/admin_dash.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})
         else:
-            return render(request, 'dashboard/normal_dash.html', {'usertype': 'Normal'})
+            business = NormalUser.objects.get(user=request.user).business.name.lower()
+
+
+            if business == "farming":
+                return render(request, 'dashboard/normal_dash_farm.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "milk":
+                return render(request, 'dashboard/normal_dash_milk.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "transport":
+                return render(request, 'dashboard/normal_dash_transport.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "iceblock":
+                return render(request, 'dashboard/normal_dash_iceb.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "rent":
+                return render(request, 'dashboard/normal_dash_rent.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "rowater":
+                return render(request, 'dashboard/normal_dash_rowater.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            elif business == "icechip":
+                return render(request, 'dashboard/normal_dash_icechip.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
+            else:
+                return render(request, 'dashboard/normal_dash.html',
+                              {'message': 'You are not an admin', 'bussiness': business})
     else:
         return render(request, 'users/not_loggedin.html')
 
@@ -295,7 +321,7 @@ def add_user_into_system(request):
                 form = RegisterForm()
                 return render(request, 'dashboard/add_user.html', {'form': form})
         else:
-            return render(request, 'dashboard/normal_dash.html', {'message': 'You are not an admin'})
+            return redirect(dashboard)
     else:
         return render(request, 'users/not_loggedin.html')
 

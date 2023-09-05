@@ -1,0 +1,167 @@
+{% extends 'core/sidebariceb.html' %}
+
+<html>
+<head>
+    <title>Ice Block</title>
+</head>
+<body>
+{% block content %}
+    <h1>Welcome Normal User</h1>
+    <h1>{{ bussiness }}</h1>
+    {#    <div class="row">#}
+    {#        <div class="col-xl-3 col-md-6">#}
+    {#            <!-- card -->#}
+    {#            <div class="card card-animate">#}
+    {#                <div class="card-body">#}
+    {#                    <div class="d-flex align-items-center">#}
+    {#                        <div class="flex-grow-1 overflow-hidden">#}
+    {#                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Customers</p>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="d-flex align-items-end justify-content-between mt-4">#}
+    {#                        <div>#}
+    {#                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"#}
+    {#                                                                                  data-target="{{ customer_length }}">0</span>#}
+    {#                            </h4>#}
+    {#                            <a href={% url 'display_customer_iceb' %} class="text-decoration-underline">View#}
+    {#                                Customers</a>#}
+    {#                        </div>#}
+    {#                        <div class="avatar-sm flex-shrink-0">#}
+    {#                        <span class="avatar-title bg-primary-subtle rounded fs-3">#}
+    {#                           <span class="mdi mdi-table-account text-primary"#}
+    {#                                 style="scale: 1.5;"#}
+    {#                           ></span>#}
+    {#                        </span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div><!-- end card body -->#}
+    {#            </div><!-- end card -->#}
+    {#        </div><!-- end col -->#}
+    {##}
+    {#        <div class="col-xl-3 col-md-6">#}
+    {#            <!-- card -->#}
+    {#            <div class="card card-animate">#}
+    {#                <div class="card-body">#}
+    {#                    <div class="d-flex align-items-center">#}
+    {#                        <div class="flex-grow-1 overflow-hidden">#}
+    {#                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Employees</p>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="d-flex align-items-end justify-content-between mt-4">#}
+    {#                        <div>#}
+    {#                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"#}
+    {#                                                                                  data-target="{{ emp_length }}">0</span>#}
+    {#                            </h4>#}
+    {#                            <a href="" class="text-decoration-underline">View Employee</a>#}
+    {#                        </div>#}
+    {#                        <div class="avatar-sm flex-shrink-0">#}
+    {#                                                        <span class="avatar-title bg-info-subtle rounded fs-3">#}
+    {#                                                            <i class="ri-user-line text-info"></i>#}
+    {#                                                        </span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div><!-- end card body -->#}
+    {#            </div><!-- end card -->#}
+    {#        </div><!-- end col -->#}
+    {##}
+    {#        <div class="col-xl-3 col-md-6">#}
+    {#            <!-- card -->#}
+    {#            <div class="card card-animate">#}
+    {#                <div class="card-body">#}
+    {#                    <div class="d-flex align-items-center">#}
+    {#                        <div class="flex-grow-1 overflow-hidden">#}
+    {#                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Delivery#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="d-flex align-items-end justify-content-between mt-4">#}
+    {#                        <div>#}
+    {#                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"#}
+    {#                                                                                  data-target="{{ total_delivery }}">0</span>#}
+    {#                            </h4>#}
+    {#                            <a href={% url 'display_delivery_iceb' %} class="text-decoration-underline">View#}
+    {#                                Deliveries</a>#}
+    {#                        </div>#}
+    {#                        <div class="avatar-sm flex-shrink-0">#}
+    {#                                                        <span class="avatar-title bg-primary-subtle rounded fs-3">#}
+    {#                                                            <span class="mdi text-primary mdi-account-hard-hat"#}
+    {#                                                                  style="scale: 1.5;"#}
+    {#                                                            ></span>#}
+    {#                                                        </span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div><!-- end card body -->#}
+    {#            </div><!-- end card -->#}
+    {#        </div><!-- end col -->#}
+    {#    </div>#}
+    {#    <div class="row">#}
+    {#        <div class="col-lg-6">#}
+    {#            <div class="card">#}
+    {#                <div class="card-header">#}
+    {#                    <h4 class="card-title mb-0">#}
+    {#                        Employee#}
+    {#                    </h4>#}
+    {#                </div>#}
+    {#                <div class="card-body">#}
+    {#                    <table class="table table-nowrap">#}
+    {#                        <thead>#}
+    {#                        <tr>#}
+    {#                            <th scope="col">ID</th>#}
+    {#                            <th scope="col">Name</th>#}
+    {#                            <th scope="col">Action</th>#}
+    {#                        </tr>#}
+    {#                        </thead>#}
+    {#                        <tbody>#}
+    {#                        {% for user in users %}#}
+    {#                            <tr>#}
+    {#                                <th scope="row"><a href="#" class="fw-semibold">{{ user.id }}</a></th>#}
+    {#                                <td>{{ user.user }}</td>#}
+    {#                                <td>#}
+    {#                                    Coming Soon#}
+    {#                                </td>#}
+    {#                            </tr>#}
+    {#                        {% endfor %}#}
+    {#                        </tbody>#}
+    {#                    </table>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="col-xl-6">#}
+    {#            <div class="card">#}
+    {#                <div class="card-header">#}
+    {#                    <h4 class="card-title mb-0">Expenses by Day Category</h4>#}
+    {#                </div>#}
+    {#                <div class="card-body">#}
+    {#                    <canvas id="iceBlockPriceChart"></canvas>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div> <!-- end col -->#}
+    {##}
+    {#    </div>#}
+    {#    <div class="row">#}
+    {#        <div class="col-xl-6">#}
+    {#            <div class="card">#}
+    {#                <div class="card-header">#}
+    {#                    <h4 class="card-title mb-0">Expenses by Day</h4>#}
+    {#                </div>#}
+    {#                <div class="card-body">#}
+    {#                    <canvas id="iceBlockChart"></canvas>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div> <!-- end col -->#}
+    {#        <div class="col-xl-6">#}
+    {#            <div class="card">#}
+    {#                <div class="card-header">#}
+    {#                    <h4 class="card-title mb-0">Number Of Delivery</h4>#}
+    {#                </div>#}
+    {#                <div class="card-body">#}
+    {#                    <canvas id="deliveryChart"></canvas>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div> <!-- end col -->#}
+    {#    </div>#}
+    <a href={% url 'logout' %}>
+        <button class="btn btn-primary">Logout</button>
+    </a>
+{% endblock %}
+</body>
+</html>
