@@ -50,35 +50,58 @@
         </div>
         </p>
     {% endif %}
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-nowrap">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Morning Milk</th>
-                    <th scope="col">Evening Milk</th>
-                    <th scope="col">Total Milk</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for daily_production in daily_productions %}
-                    <tr>
-                        <td>{{ daily_production.id }}</td>
-                        <td>{{ daily_production.date }}</td>
-                        <td>{{ daily_production.morning_milk }}</td>
-                        <td>{{ daily_production.evening_milk }}</td>
-                        <td>{{ daily_production.total_milk }}</td>
-                        <td>
-                            <a href={% url 'edit_daily_production' daily_production.id %}>Edit</a> |
-                            <a href={% url 'delete_daily_production' daily_production.id %}>Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="card m-3">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h4 class="card-title">Season Types</h4>
+                </div>
+                <div>
+                    <form method="post" class="d-flex gap-5 h-auto">
+                        {% csrf_token %}
+                        <label for="export_format">Select Export Format:</label>
+                        <select name="export_format" class="form-control w-100" id="export_format">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Export</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Morning Milk</th>
+                            <th scope="col">Evening Milk</th>
+                            <th scope="col">Total Milk</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for daily_production in daily_productions %}
+                            <tr>
+                                <td>{{ daily_production.id }}</td>
+                                <td>{{ daily_production.date }}</td>
+                                <td>{{ daily_production.morning_milk }}</td>
+                                <td>{{ daily_production.evening_milk }}</td>
+                                <td>{{ daily_production.total_milk }}</td>
+                                <td>
+                                    <a href={% url 'edit_daily_production' daily_production.id %}>Edit</a> |
+                                    <a href={% url 'delete_daily_production' daily_production.id %}>Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <!-- end col -->
     </div>

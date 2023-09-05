@@ -1,4 +1,8 @@
+import csv
+
+from django.http import HttpResponse
 from django.shortcuts import render
+from reportlab.pdfgen import canvas
 
 from .forms import AnimalForm, LaborForm, ExpenseForm, GrassForm, CustomerFormCreate, DailyDeliveryForm, \
     DailyProductionForm, PaymentForm, CustomerFormUpdate
@@ -73,9 +77,157 @@ def create_grass(request):
         return render(request, 'users/not_loggedin.html')
 
 
+def generate_pdf(animals):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for animal in animals:
+        pdf.drawString(100, 700, f'Labor ID: {animal.id}')
+        pdf.drawString(100, 680, f'Labor Date: {animal.name}')
+        pdf.drawString(100, 660, f'Labor Date: {animal.location}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv(animals):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Animal Id', 'Animal Name', 'Animal Location'])
+
+    # Write your CSV content here
+    for animal in animals:
+        writer.writerow([animal.id, animal.name, animal.location])
+
+    return response
+
+
+def generate_pdf1(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Labor ID: {dt.id}')
+        pdf.drawString(100, 680, f'Labor Nmae: {dt.name}')
+        pdf.drawString(100, 660, f'Labor Mobile No: {dt.mobile_number}')
+        pdf.drawString(100, 660, f'Labor Labor type: {dt.labor_type}')
+        pdf.drawString(100, 660, f'Labor Payment To Be Paid: {dt.payment_to_be_paid}')
+        pdf.drawString(100, 660, f'Labor Credit: {dt.credit}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv1(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Animal Id', 'Animal Name', 'Animal Mobile No', 'Animal Labor Type', 'Labor Pyament To Be Paid',
+                     'Labor Credit'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.name, dt.mobile_number, dt.labor_type, dt.payment_to_be_paid, dt.credit])
+
+    return response
+
+
+def generate_pdf2(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Expense ID: {dt.id}')
+        pdf.drawString(100, 680, f'Expense Type: {dt.expenses_type}')
+        pdf.drawString(100, 660, f'Expense Amount: {dt.amount}')
+        pdf.drawString(100, 660, f'Expense Date: {dt.date}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv2(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Expense Id', 'Expense Type', 'Expense Amount', 'Expense Date'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.expenses_type, dt.amount, dt.date])
+
+    return response
+
+
+def generate_pdf3(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Grass ID: {dt.id}')
+        pdf.drawString(100, 680, f'Grass Location: {dt.location}')
+        pdf.drawString(100, 660, f'Grass Owner Name: {dt.owner_name}')
+        pdf.drawString(100, 660, f'Grass Owner Mobile: {dt.owner_mobile}')
+        pdf.drawString(100, 660, f'Grass Total Amount Grass: {dt.total_amount_grass}')
+        pdf.drawString(100, 660, f'Grass Rate: {dt.rate}')
+        pdf.drawString(100, 660, f'Grass Final Price: {dt.final_price}')
+        pdf.drawString(100, 660, f'Grass Due Amount: {dt.due_amount}')
+        pdf.drawString(100, 660, f'Grass Amount To Be Paid: {dt.amount_to_be_paid}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv3(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Grass Id', 'Grass Location', 'Grass Owner Name', 'Grass Owner Mobile', 'Grass Total Amount Grass',
+                     'Grass Rate', 'Grass Final Price', 'Grass Due Amount', 'Grass Amount To Be Paid'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.location, dt.owner_name, dt.owner_mobile, dt.total_amount_grass, dt.rate,
+                         dt.final_price, dt.due_amount, dt.amount_to_be_paid])
+
+    return response
+
+
 def view_animal(request):
     if request.user.is_authenticated:
         animals = Animal.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf(animals)
+            elif export_format == 'csv':
+                response = generate_csv(animals)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/animal.html', {'animals': animals})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -84,6 +236,17 @@ def view_animal(request):
 def view_labor(request):
     if request.user.is_authenticated:
         labors = Labor.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf1(labors)
+            elif export_format == 'csv':
+                response = generate_csv1(labors)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/labor.html', {'labors': labors})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -92,6 +255,17 @@ def view_labor(request):
 def view_expense(request):
     if request.user.is_authenticated:
         expenses = Expense.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf2(expenses)
+            elif export_format == 'csv':
+                response = generate_csv2(expenses)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/expense.html', {'expenses': expenses})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -100,6 +274,18 @@ def view_expense(request):
 def view_grass(request):
     if request.user.is_authenticated:
         grasses = Grass.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf3(grasses)
+            elif export_format == 'csv':
+                response = generate_csv3(grasses)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
+
         return render(request, 'milkfarm/display/grass.html', {'grasses': grasses})
     else:
         return render(request, 'users/not_loggedin.html')

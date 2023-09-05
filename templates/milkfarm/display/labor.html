@@ -45,37 +45,60 @@
         </div>
         </p>
     {% endif %}
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-nowrap">
-                <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">name</th>
-                    <th scope="col">mobile_number</th>
-                    <th scope="col">labor_type</th>
-                    <th scope="col">payment_to_paid</th>
-                    <th scope="col">credit</th>
-                    <th scope="col">action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for labor in labors %}
-                    <tr>
-                        <td>{{ labor.id }}</td>
-                        <td>{{ labor.name }}</td>
-                        <td>{{ labor.mobile_number }}</td>
-                        <td>{{ labor.labor_type }}</td>
-                        <td>{{ labor.payment_to_be_paid }}</td>
-                        <td>{{ labor.credit }}</td>
-                        <td>
-                            <a href={% url 'edit_labor' labor.id %}>Edit</a> |
-                            <a href={% url 'delete_labor' labor.id %}>Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="card m-3">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h4 class="card-title">Season Types</h4>
+                </div>
+                <div>
+                    <form method="post" class="d-flex gap-5 h-auto">
+                        {% csrf_token %}
+                        <label for="export_format">Select Export Format:</label>
+                        <select name="export_format" class="form-control w-100" id="export_format">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Export</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">name</th>
+                            <th scope="col">mobile_number</th>
+                            <th scope="col">labor_type</th>
+                            <th scope="col">payment_to_paid</th>
+                            <th scope="col">credit</th>
+                            <th scope="col">action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for labor in labors %}
+                            <tr>
+                                <td>{{ labor.id }}</td>
+                                <td>{{ labor.name }}</td>
+                                <td>{{ labor.mobile_number }}</td>
+                                <td>{{ labor.labor_type }}</td>
+                                <td>{{ labor.payment_to_be_paid }}</td>
+                                <td>{{ labor.credit }}</td>
+                                <td>
+                                    <a href={% url 'edit_labor' labor.id %}>Edit</a> |
+                                    <a href={% url 'delete_labor' labor.id %}>Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <!-- end col -->
     </div>
