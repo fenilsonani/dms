@@ -482,25 +482,168 @@ def view_customer(request):
         return render(request, 'users/not_loggedin.html')
 
 
+def generate_pdf4(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Daily Delivery ID: {dt.id}')
+        pdf.drawString(100, 680, f'Daily Delivery Customer: {dt.customer}')
+        pdf.drawString(100, 660, f'Daily Delivery Date: {dt.date}')
+        pdf.drawString(100, 660, f'Daily Delivery Morning Milk: {dt.morning_milk}')
+        pdf.drawString(100, 660, f'Daily Delivery Evening Milk: {dt.evening_milk}')
+        pdf.drawString(100, 660, f'Daily Delivery Total Milk: {dt.total_milk}')
+        pdf.drawString(100, 660, f'Daily Delivery Rate: {dt.rate}')
+        pdf.drawString(100, 660, f'Daily Delivery Final Price: {dt.final_price}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv4(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(
+        ['Daily Delivery Id', 'Daily Delivery Customer', 'Daily Delivery Date', 'Daily Delivery Morning Milk',
+         'Daily Delivery Evening Milk', 'Daily Delivery Total Milk', 'Daily Delivery Rate',
+         'Daily Delivery Final Price'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.customer, dt.date, dt.morning_milk, dt.evening_milk, dt.total_milk, dt.rate,
+                         dt.final_price])
+
+    return response
+
+
 def view_daily_delivery(request):
     if request.user.is_authenticated:
         daily_deliveries = DailyDelivery.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf4(daily_deliveries)
+            elif export_format == 'csv':
+                response = generate_csv4(daily_deliveries)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/daily_delivery.html', {'daily_deliveries': daily_deliveries})
     else:
         return render(request, 'users/not_loggedin.html')
 
 
+def generate_pdf5(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Daily Production ID: {dt.id}')
+        pdf.drawString(100, 680, f'Daily Production Date: {dt.date}')
+        pdf.drawString(100, 660, f'Daily Production Milk: {dt.milk}')
+        pdf.drawString(100, 660, f'Daily Production Rate: {dt.rate}')
+        pdf.drawString(100, 660, f'Daily Production Final Price: {dt.final_price}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv5(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(
+        ['Daily Production Id', 'Daily Production Date', 'Daily Production Milk', 'Daily Production Rate',
+         'Daily Production Final Price'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.date, dt.milk, dt.rate, dt.final_price])
+
+    return response
+
+
 def view_daily_production(request):
     if request.user.is_authenticated:
         daily_productions = DailyProduction.objects.all()
+        if request.method == 'POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf5(daily_productions)
+            elif export_format == 'csv':
+                response = generate_csv5(daily_productions)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/daily_production.html', {'daily_productions': daily_productions})
     else:
         return render(request, 'users/not_loggedin.html')
 
+def generate_pdf6(data):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # Define your PDF layout and content here
+    for dt in data:
+        pdf.drawString(100, 700, f'Payment ID: {dt.id}')
+        pdf.drawString(100, 680, f'Payment Customer: {dt.customer}')
+        pdf.drawString(100, 660, f'Payment Date: {dt.date}')
+        pdf.drawString(100, 660, f'Payment Amount: {dt.amount}')
+        pdf.drawString(100, 660, f'Payment Payment Type: {dt.payment_type}')
+        pdf.drawString(100, 660, f'Payment Payment To Be Paid: {dt.payment_to_be_paid}')
+        pdf.drawString(100, 660, f'Payment Credit: {dt.credit}')
+        pdf.showPage()
+
+    pdf.save()
+    return response
+
+
+def generate_csv6(data):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(
+        ['Payment Id', 'Payment Customer', 'Payment Date', 'Payment Amount', 'Payment Payment Type',
+         'Payment Payment To Be Paid', 'Payment Credit'])
+
+    # Write your CSV content here
+    for dt in data:
+        writer.writerow([dt.id, dt.customer, dt.date, dt.amount, dt.payment_type, dt.payment_to_be_paid, dt.credit])
+
+    return response
 
 def view_payment(request):
     if request.user.is_authenticated:
         payments = Payment.objects.all()
+        if request.method=='POST':
+            print(request.POST)
+            export_format = request.POST.get('export_format')
+            if export_format == 'pdf':
+                response = generate_pdf6(payments)
+            elif export_format == 'csv':
+                response = generate_csv6(payments)
+            else:
+                response = HttpResponse("Unsupported format")
+
+            return response
         return render(request, 'milkfarm/display/payment.html', {'payments': payments})
     else:
         return render(request, 'users/not_loggedin.html')
