@@ -1,10 +1,8 @@
 import datetime
 from collections import defaultdict
 from datetime import date, timedelta
-
 from django.db.models import Sum, Count
 from django.shortcuts import render, redirect
-
 from farm.models import Farm, Season, SeasonExpense, Crop
 from iceblock.models import Customer as IceCustomer
 from iceblock.models import Delivery as IceDelivery
