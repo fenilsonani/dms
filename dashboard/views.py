@@ -4,15 +4,15 @@ from datetime import date, timedelta
 from django.db.models import Sum, Count
 from django.shortcuts import render, redirect
 from farm.models import Farm, Season, SeasonExpense, Crop
-from iceblock.models import Customer as IceCustomer
-from iceblock.models import Delivery as IceDelivery
-from icechip.models import Customer as IceChipCustomer
-from icechip.models import Delivery as IceChipDelivery
+# from iceblock.models import Customer as IceCustomer
+# from iceblock.models import Delivery as IceDelivery
+# from icechip.models import Customer as IceChipCustomer
+# from icechip.models import Delivery as IceChipDelivery
 from milkfarm.models import Customer, Labor, Animal
 from milkfarm.models import DailyProduction, Expense
-from rent.models import House, RentPayment, RentalPerson
-from rowater.models import Customer as RowaterCustomer
-from rowater.models import Delivery as RowaterDelivery
+# from rent.models import House, RentPayment, RentalPerson
+# from rowater.models import Customer as RowaterCustomer
+# from rowater.models import Delivery as RowaterDelivery
 from transport.models import Expense as transportExpense
 from transport.models import TransportExpenses, Trips
 from users.forms import NormalUserForm, RegisterForm

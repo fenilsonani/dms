@@ -20,16 +20,16 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('secre/dev/admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', views.index, name='index'),
     path('dashboard/', include('dashboard.urls')),
     path('dashboard/farm/', include('farm.urls')),
     path('dashboard/transport/', include('transport.urls')),
-    path('dashboard/iceblock/', include('iceblock.urls')),
-    path('dashboard/rent/', include('rent.urls')),
+    # path('dashboard/iceblock/', include('iceblock.urls')),
+    # path('dashboard/rent/', include('rent.urls')),
     path('dashboard/milk/', include('milkfarm.urls')),
-    path('dashboard/icechip/', include('icechip.urls')),
-    path('dashboard/rowater/', include('rowater.urls')),
+    # path('dashboard/icechip/', include('icechip.urls')),
+    # path('dashboard/rowater/', include('rowater.urls')),
     path('comming_soon/', views.comming_soon, name='comming_soon'),
 ]

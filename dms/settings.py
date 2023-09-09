@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'dashboard',
     'farm',
     'transport',
-    'iceblock',
-    'rent',
+    # 'iceblock',
+    # 'rent',
     'milkfarm',
-    'icechip',
-    'rowater'
+    # 'icechip',
+    # 'rowater'
 ]
 
 MIDDLEWARE = [
