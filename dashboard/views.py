@@ -3,7 +3,7 @@ from collections import defaultdict
 from datetime import date, timedelta
 from django.db.models import Sum, Count
 from django.shortcuts import render, redirect
-from farm.models import Farm, Season, SeasonExpense, Crop
+# from farm.models import Farm, Season, SeasonExpense, Crop
 # from iceblock.models import Customer as IceCustomer
 # from iceblock.models import Delivery as IceDelivery
 # from icechip.models import Customer as IceChipCustomer
@@ -13,8 +13,8 @@ from milkfarm.models import DailyProduction, Expense
 # from rent.models import House, RentPayment, RentalPerson
 # from rowater.models import Customer as RowaterCustomer
 # from rowater.models import Delivery as RowaterDelivery
-from transport.models import Expense as transportExpense
-from transport.models import TransportExpenses, Trips
+# from transport.models import Expense as transportExpense
+# from transport.models import TransportExpenses, Trips
 from users.forms import NormalUserForm, RegisterForm
 from users.is_admin import is_admin
 from users.models import NormalUser, Business
@@ -33,45 +33,45 @@ def dashboard(request):
 
             business = business.name.lower()
 
-            if business == "farming":
-                emp_length = len(users.all())
-                farm_length = len(Farm.objects.all())
-                season_length = len(Season.objects.all())
-                crop_length = len(Crop.objects.all())
-                expense_length = len(Expense.objects.all())
-                season_expense_length = len(SeasonExpense.objects.all())
-                seasons = Season.objects.all()
-
-                # Data for harvested crop amount chart
-                harvested_crop_amounts = [season.harvested_crop_amount_tons for season in seasons]
-
-                # Data for expenses chart
-                expense_categories = Season.EXPENSE_CHOICES
-                expense_data = {}
-
-                for category, _ in expense_categories:
-                    expense_data[category] = []
-
-                for category, _ in expense_categories:
-                    for season in seasons:
-                        total_expense = \
-                            season.seasonexpense_set.filter(expense__name=category).aggregate(total=Sum('amount'))[
-                                'total'] or 0
-                        expense_data[category].append(total_expense)
-                print(expense_data)
-                contex = {
-                    'usertype': 'Admin', 'business': business,
-                    'emp_length': emp_length, 'farm_length': farm_length,
-                    'season_length': season_length, 'crop_length': crop_length,
-                    'expense_length': expense_length, 'season_expense_length': season_expense_length,
-                    'seasons': seasons,
-                    'harvested_crop_amounts': harvested_crop_amounts,
-                    'expense_categories': expense_categories,
-                    'expense_data': expense_data,
-                }
-                return render(request, 'dashboard/admin_dash_farm.html',
-                              contex)
-            elif business == "milk":
+            # if business == "farming":
+            #     emp_length = len(users.all())
+            #     farm_length = len(Farm.objects.all())
+            #     season_length = len(Season.objects.all())
+            #     crop_length = len(Crop.objects.all())
+            #     expense_length = len(Expense.objects.all())
+            #     season_expense_length = len(SeasonExpense.objects.all())
+            #     seasons = Season.objects.all()
+            #
+            #     # Data for harvested crop amount chart
+            #     harvested_crop_amounts = [season.harvested_crop_amount_tons for season in seasons]
+            #
+            #     # Data for expenses chart
+            #     expense_categories = Season.EXPENSE_CHOICES
+            #     expense_data = {}
+            #
+            #     for category, _ in expense_categories:
+            #         expense_data[category] = []
+            #
+            #     for category, _ in expense_categories:
+            #         for season in seasons:
+            #             total_expense = \
+            #                 season.seasonexpense_set.filter(expense__name=category).aggregate(total=Sum('amount'))[
+            #                     'total'] or 0
+            #             expense_data[category].append(total_expense)
+            #     print(expense_data)
+            #     contex = {
+            #         'usertype': 'Admin', 'business': business,
+            #         'emp_length': emp_length, 'farm_length': farm_length,
+            #         'season_length': season_length, 'crop_length': crop_length,
+            #         'expense_length': expense_length, 'season_expense_length': season_expense_length,
+            #         'seasons': seasons,
+            #         'harvested_crop_amounts': harvested_crop_amounts,
+            #         'expense_categories': expense_categories,
+            #         'expense_data': expense_data,
+            #     }
+            #     return render(request, 'dashboard/admin_dash_farm.html',
+            #                   contex)
+            if business == "milk":
                 customer_length = len(Customer.objects.all())
                 emp_length = len(users)
                 labor_length = len(Labor.objects.all())
@@ -118,23 +118,23 @@ def dashboard(request):
                                'line_data': line_data,
                                'pie_data': pie_data,
                                'chart_data': chart_data})
-            elif business == "transport":
-                emp_length = len(users.all())
-                expense_length = len(transportExpense.objects.all())
-                trips_length = len(Trips.objects.all())
-                expense_type_length = len(TransportExpenses.objects.all())
-
-                expenses = TransportExpenses.objects.all()
-                expenses_grouped = TransportExpenses.objects.values('date').annotate(
-                    total_amount=Sum('amount')).order_by('date')
-                trips_count = Trips.objects.values('date').annotate(num_trips=Count('id')).order_by('date')
-                return render(request, 'dashboard/admin_dash_transport.html',
-                              {'usertype': 'Admin', 'business': business,
-                               'expense_type_length': expense_type_length, 'expense_length': expense_length,
-                               'trips_length': trips_length, 'emp_length': emp_length,
-                               'expenses': expenses, 'expenses_grouped': expenses_grouped,
-                               'trips_count': trips_count
-                               })
+            # elif business == "transport":
+            #     emp_length = len(users.all())
+            #     expense_length = len(transportExpense.objects.all())
+            #     trips_length = len(Trips.objects.all())
+            #     expense_type_length = len(TransportExpenses.objects.all())
+            #
+            #     expenses = TransportExpenses.objects.all()
+            #     expenses_grouped = TransportExpenses.objects.values('date').annotate(
+            #         total_amount=Sum('amount')).order_by('date')
+            #     trips_count = Trips.objects.values('date').annotate(num_trips=Count('id')).order_by('date')
+            #     return render(request, 'dashboard/admin_dash_transport.html',
+            #                   {'usertype': 'Admin', 'business': business,
+            #                    'expense_type_length': expense_type_length, 'expense_length': expense_length,
+            #                    'trips_length': trips_length, 'emp_length': emp_length,
+            #                    'expenses': expenses, 'expenses_grouped': expenses_grouped,
+            #                    'trips_count': trips_count
+            #                    })
 
             # elif business == "iceblock":
             #     one_week_ago = date.today() - timedelta(days=7)
