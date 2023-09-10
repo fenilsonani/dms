@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dms/",
-      "use": "@vercel/python"
-    }
-  ],
   "routes": [
     {
       "src": "/static/(.*)",
@@ -17,19 +11,12 @@
     },
     {
       "src": "/admin/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      },
+      "headers": { "Cache-Control": "public, max-age=0, must-revalidate" },
       "dest": "/dms/admin/$1"
     },
     {
       "src": "/(.*)",
       "dest": "dms/dms/wsgi.py"
     }
-  ],
-  "build": {
-    "env": {
-      "DJANGO_SETTINGS_MODULE": "dms.settings"
-    }
-  }
+  ]
 }
