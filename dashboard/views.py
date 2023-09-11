@@ -3,18 +3,18 @@ from collections import defaultdict
 from datetime import date, timedelta
 from django.db.models import Sum, Count
 from django.shortcuts import render, redirect
-# from farm.models import Farm, Season, SeasonExpense, Crop
-# from iceblock.models import Customer as IceCustomer
-# from iceblock.models import Delivery as IceDelivery
-# from icechip.models import Customer as IceChipCustomer
-# from icechip.models import Delivery as IceChipDelivery
+from farm.models import Farm, Season, SeasonExpense, Crop
+from iceblock.models import Customer as IceCustomer
+from iceblock.models import Delivery as IceDelivery
+from icechip.models import Customer as IceChipCustomer
+from icechip.models import Delivery as IceChipDelivery
 from milkfarm.models import Customer, Labor, Animal
 from milkfarm.models import DailyProduction, Expense
-# from rent.models import House, RentPayment, RentalPerson
-# from rowater.models import Customer as RowaterCustomer
-# from rowater.models import Delivery as RowaterDelivery
-# from transport.models import Expense as transportExpense
-# from transport.models import TransportExpenses, Trips
+from rent.models import House, RentPayment, RentalPerson
+from rowater.models import Customer as RowaterCustomer
+from rowater.models import Delivery as RowaterDelivery
+from transport.models import Expense as transportExpense
+from transport.models import TransportExpenses, Trips
 from users.forms import NormalUserForm, RegisterForm
 from users.is_admin import is_admin
 from users.models import NormalUser, Business
@@ -33,45 +33,45 @@ def dashboard(request):
 
             business = business.name.lower()
 
-            # if business == "farming":
-            #     emp_length = len(users.all())
-            #     farm_length = len(Farm.objects.all())
-            #     season_length = len(Season.objects.all())
-            #     crop_length = len(Crop.objects.all())
-            #     expense_length = len(Expense.objects.all())
-            #     season_expense_length = len(SeasonExpense.objects.all())
-            #     seasons = Season.objects.all()
-            #
-            #     # Data for harvested crop amount chart
-            #     harvested_crop_amounts = [season.harvested_crop_amount_tons for season in seasons]
-            #
-            #     # Data for expenses chart
-            #     expense_categories = Season.EXPENSE_CHOICES
-            #     expense_data = {}
-            #
-            #     for category, _ in expense_categories:
-            #         expense_data[category] = []
-            #
-            #     for category, _ in expense_categories:
-            #         for season in seasons:
-            #             total_expense = \
-            #                 season.seasonexpense_set.filter(expense__name=category).aggregate(total=Sum('amount'))[
-            #                     'total'] or 0
-            #             expense_data[category].append(total_expense)
-            #     print(expense_data)
-            #     contex = {
-            #         'usertype': 'Admin', 'business': business,
-            #         'emp_length': emp_length, 'farm_length': farm_length,
-            #         'season_length': season_length, 'crop_length': crop_length,
-            #         'expense_length': expense_length, 'season_expense_length': season_expense_length,
-            #         'seasons': seasons,
-            #         'harvested_crop_amounts': harvested_crop_amounts,
-            #         'expense_categories': expense_categories,
-            #         'expense_data': expense_data,
-            #     }
-            #     return render(request, 'dashboard/admin_dash_farm.html',
-            #                   contex)
-            if business == "milk":
+            if business == "farming":
+                emp_length = len(users.all())
+                farm_length = len(Farm.objects.all())
+                season_length = len(Season.objects.all())
+                crop_length = len(Crop.objects.all())
+                expense_length = len(Expense.objects.all())
+                season_expense_length = len(SeasonExpense.objects.all())
+                seasons = Season.objects.all()
+
+                # Data for harvested crop amount chart
+                harvested_crop_amounts = [season.harvested_crop_amount_tons for season in seasons]
+
+                # Data for expenses chart
+                expense_categories = Season.EXPENSE_CHOICES
+                expense_data = {}
+
+                for category, _ in expense_categories:
+                    expense_data[category] = []
+
+                for category, _ in expense_categories:
+                    for season in seasons:
+                        total_expense = \
+                            season.seasonexpense_set.filter(expense__name=category).aggregate(total=Sum('amount'))[
+                                'total'] or 0
+                        expense_data[category].append(total_expense)
+                print(expense_data)
+                contex = {
+                    'usertype': 'Admin', 'business': business,
+                    'emp_length': emp_length, 'farm_length': farm_length,
+                    'season_length': season_length, 'crop_length': crop_length,
+                    'expense_length': expense_length, 'season_expense_length': season_expense_length,
+                    'seasons': seasons,
+                    'harvested_crop_amounts': harvested_crop_amounts,
+                    'expense_categories': expense_categories,
+                    'expense_data': expense_data,
+                }
+                return render(request, 'dashboard/admin_dash_farm.html',
+                              contex)
+            elif business == "milk":
                 customer_length = len(Customer.objects.all())
                 emp_length = len(users)
                 labor_length = len(Labor.objects.all())
@@ -118,149 +118,149 @@ def dashboard(request):
                                'line_data': line_data,
                                'pie_data': pie_data,
                                'chart_data': chart_data})
-            # elif business == "transport":
-            #     emp_length = len(users.all())
-            #     expense_length = len(transportExpense.objects.all())
-            #     trips_length = len(Trips.objects.all())
-            #     expense_type_length = len(TransportExpenses.objects.all())
-            #
-            #     expenses = TransportExpenses.objects.all()
-            #     expenses_grouped = TransportExpenses.objects.values('date').annotate(
-            #         total_amount=Sum('amount')).order_by('date')
-            #     trips_count = Trips.objects.values('date').annotate(num_trips=Count('id')).order_by('date')
-            #     return render(request, 'dashboard/admin_dash_transport.html',
-            #                   {'usertype': 'Admin', 'business': business,
-            #                    'expense_type_length': expense_type_length, 'expense_length': expense_length,
-            #                    'trips_length': trips_length, 'emp_length': emp_length,
-            #                    'expenses': expenses, 'expenses_grouped': expenses_grouped,
-            #                    'trips_count': trips_count
-            #                    })
+            elif business == "transport":
+                emp_length = len(users.all())
+                expense_length = len(transportExpense.objects.all())
+                trips_length = len(Trips.objects.all())
+                expense_type_length = len(TransportExpenses.objects.all())
 
-            # elif business == "iceblock":
-            #     one_week_ago = date.today() - timedelta(days=7)
-            #     customer_length = len(IceCustomer.objects.all())
-            #     emp_length = len(users.all())
-            #     total_delivery = len(IceDelivery.objects.all())
-            #     delivery_data = (
-            #         IceDelivery.objects
-            #         .filter(date__gte=one_week_ago)
-            #         .values('date')
-            #         .annotate(total_deliveries=Count('id'))
-            #         .order_by('date')
-            #     )
-            #     labels = [str(item['date']) for item in delivery_data]
-            #     data = [item['total_deliveries'] for item in delivery_data]
-            #
-            #     delivery_data1 = (
-            #         IceDelivery.objects
-            #         .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
-            #         .values('date')
-            #         .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
-            #         .order_by('date')
-            #     )
-            #
-            #     labels1 = [str(item['date']) for item in delivery_data1]
-            #     data1 = [item['total_ice_blocks'] for item in delivery_data1]
-            #
-            #     delivery_data2 = (
-            #         IceDelivery.objects
-            #         .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
-            #         .values('date')
-            #         .annotate(total_ice_block_price=Sum('total_ice_block_price'))
-            #         .order_by('date')
-            #     )
-            #
-            #     labels2 = [str(item['date']) for item in delivery_data2]
-            #     data2 = [item['total_ice_block_price'] for item in delivery_data2]
-            #     print(labels2)
-            #     print(data2)
-            #
-            #     contex = {
-            #         'usertype': 'Admin', 'business': business,
-            #         'customer_length': customer_length, 'emp_length': emp_length,
-            #         'total_delivery': total_delivery,
-            #         'labels': labels, 'data': data,
-            #         'labels1': labels1, 'data1': data1,
-            #         'labels2': labels2, 'data2': data2
-            #     }
-            #
-            #     return render(request, 'dashboard/admin_dash_iceb.html', contex)
-            # elif business == "rent":
-            #     house_length = len(House.objects.all())
-            #     rp_length = len(RentalPerson.objects.all())
-            #     rpayment_length = len(RentPayment.objects.all())
-            #     emp_length = len(users.all())
-            #     return render(request, 'dashboard/admin_dash_rent.html',
-            #                   {'usertype': 'Admin', 'business': business,
-            #                    'house_length': house_length, 'rpayment_length': rpayment_length, 'rp_length': rp_length,
-            #                    'emp_length': emp_length
-            #                    })
-            # elif business == "rowater":
-            #     one_week_ago = date.today() - timedelta(days=7)
-            #     emp_length = len(users.all())
-            #     customer_length = len(RowaterCustomer.objects.all())
-            #     delivery_length = len(RowaterDelivery.objects.all())
-            #     delivery_data = (
-            #         RowaterCustomer.objects
-            #         .filter(date__gte=one_week_ago)
-            #         .values('date')
-            #         .annotate(total_deliveries=Count('id'))
-            #         .order_by('date')
-            #     )
-            #     labels = [str(item['date']) for item in delivery_data]
-            #     data = [item['total_deliveries'] for item in delivery_data]
-            #     delivery_data1 = (
-            #         RowaterDelivery.objects
-            #         .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
-            #         .values('date')
-            #         .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
-            #         .order_by('date')
-            #     )
-            #     labels1 = [str(item['date']) for item in delivery_data1]
-            #     data1 = [item['total_ice_blocks'] for item in delivery_data1]
-            #
-            #     return render(request, 'dashboard/admin_dash_rowater.html',
-            #                   {'usertype': 'Admin', 'business': business,
-            #                    'customer_length': customer_length, 'delivery_length': delivery_length,
-            #                    'emp_length': emp_length,
-            #                    'labels': labels,
-            #                    'data': data,
-            #                    'labels1': labels1,
-            #                    'data1': data1
-            #
-            #                    })
-            # elif business == "icechip":
-            #     emp_length = len(users.all())
-            #     customer_length = len(IceChipCustomer.objects.all())
-            #     delivery_length = len(IceChipDelivery.objects.all())
-            #     one_week_ago = date.today() - timedelta(days=7)
-            #     delivery_data = (
-            #         IceChipDelivery.objects
-            #         .filter(date__gte=one_week_ago)
-            #         .values('date')
-            #         .annotate(total_deliveries=Count('id'))
-            #         .order_by('date')
-            #     )
-            #     labels = [str(item['date']) for item in delivery_data]
-            #     data = [item['total_deliveries'] for item in delivery_data]
-            #     delivery_data1 = (
-            #         IceChipDelivery.objects
-            #         .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
-            #         .values('date')
-            #         .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
-            #         .order_by('date')
-            #     )
-            #     labels1 = [str(item['date']) for item in delivery_data1]
-            #     data1 = [item['total_ice_blocks'] for item in delivery_data1]
-            #     return render(request, 'dashboard/admin_dash_icechip.html',
-            #                   {'usertype': 'Admin', 'business': business,
-            #                    'customer_length': customer_length, 'delivery_length': delivery_length,
-            #                    'emp_length': emp_length,
-            #                    'labels': labels,
-            #                    'data': data,
-            #                    'labels1': labels1,
-            #                    'data1': data1
-            #                    })
+                expenses = TransportExpenses.objects.all()
+                expenses_grouped = TransportExpenses.objects.values('date').annotate(
+                    total_amount=Sum('amount')).order_by('date')
+                trips_count = Trips.objects.values('date').annotate(num_trips=Count('id')).order_by('date')
+                return render(request, 'dashboard/admin_dash_transport.html',
+                              {'usertype': 'Admin', 'business': business,
+                               'expense_type_length': expense_type_length, 'expense_length': expense_length,
+                               'trips_length': trips_length, 'emp_length': emp_length,
+                               'expenses': expenses, 'expenses_grouped': expenses_grouped,
+                               'trips_count': trips_count
+                               })
+
+            elif business == "iceblock":
+                one_week_ago = date.today() - timedelta(days=7)
+                customer_length = len(IceCustomer.objects.all())
+                emp_length = len(users.all())
+                total_delivery = len(IceDelivery.objects.all())
+                delivery_data = (
+                    IceDelivery.objects
+                    .filter(date__gte=one_week_ago)
+                    .values('date')
+                    .annotate(total_deliveries=Count('id'))
+                    .order_by('date')
+                )
+                labels = [str(item['date']) for item in delivery_data]
+                data = [item['total_deliveries'] for item in delivery_data]
+
+                delivery_data1 = (
+                    IceDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                    .order_by('date')
+                )
+
+                labels1 = [str(item['date']) for item in delivery_data1]
+                data1 = [item['total_ice_blocks'] for item in delivery_data1]
+
+                delivery_data2 = (
+                    IceDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_block_price=Sum('total_ice_block_price'))
+                    .order_by('date')
+                )
+
+                labels2 = [str(item['date']) for item in delivery_data2]
+                data2 = [item['total_ice_block_price'] for item in delivery_data2]
+                print(labels2)
+                print(data2)
+
+                contex = {
+                    'usertype': 'Admin', 'business': business,
+                    'customer_length': customer_length, 'emp_length': emp_length,
+                    'total_delivery': total_delivery,
+                    'labels': labels, 'data': data,
+                    'labels1': labels1, 'data1': data1,
+                    'labels2': labels2, 'data2': data2
+                }
+
+                return render(request, 'dashboard/admin_dash_iceb.html', contex)
+            elif business == "rent":
+                house_length = len(House.objects.all())
+                rp_length = len(RentalPerson.objects.all())
+                rpayment_length = len(RentPayment.objects.all())
+                emp_length = len(users.all())
+                return render(request, 'dashboard/admin_dash_rent.html',
+                              {'usertype': 'Admin', 'business': business,
+                               'house_length': house_length, 'rpayment_length': rpayment_length, 'rp_length': rp_length,
+                               'emp_length': emp_length
+                               })
+            elif business == "rowater":
+                one_week_ago = date.today() - timedelta(days=7)
+                emp_length = len(users.all())
+                customer_length = len(RowaterCustomer.objects.all())
+                delivery_length = len(RowaterDelivery.objects.all())
+                delivery_data = (
+                    RowaterCustomer.objects
+                    .filter(date__gte=one_week_ago)
+                    .values('date')
+                    .annotate(total_deliveries=Count('id'))
+                    .order_by('date')
+                )
+                labels = [str(item['date']) for item in delivery_data]
+                data = [item['total_deliveries'] for item in delivery_data]
+                delivery_data1 = (
+                    RowaterDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                    .order_by('date')
+                )
+                labels1 = [str(item['date']) for item in delivery_data1]
+                data1 = [item['total_ice_blocks'] for item in delivery_data1]
+
+                return render(request, 'dashboard/admin_dash_rowater.html',
+                              {'usertype': 'Admin', 'business': business,
+                               'customer_length': customer_length, 'delivery_length': delivery_length,
+                               'emp_length': emp_length,
+                               'labels': labels,
+                               'data': data,
+                               'labels1': labels1,
+                               'data1': data1
+
+                               })
+            elif business == "icechip":
+                emp_length = len(users.all())
+                customer_length = len(IceChipCustomer.objects.all())
+                delivery_length = len(IceChipDelivery.objects.all())
+                one_week_ago = date.today() - timedelta(days=7)
+                delivery_data = (
+                    IceChipDelivery.objects
+                    .filter(date__gte=one_week_ago)
+                    .values('date')
+                    .annotate(total_deliveries=Count('id'))
+                    .order_by('date')
+                )
+                labels = [str(item['date']) for item in delivery_data]
+                data = [item['total_deliveries'] for item in delivery_data]
+                delivery_data1 = (
+                    IceChipDelivery.objects
+                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
+                    .values('date')
+                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                    .order_by('date')
+                )
+                labels1 = [str(item['date']) for item in delivery_data1]
+                data1 = [item['total_ice_blocks'] for item in delivery_data1]
+                return render(request, 'dashboard/admin_dash_icechip.html',
+                              {'usertype': 'Admin', 'business': business,
+                               'customer_length': customer_length, 'delivery_length': delivery_length,
+                               'emp_length': emp_length,
+                               'labels': labels,
+                               'data': data,
+                               'labels1': labels1,
+                               'data1': data1
+                               })
             else:
                 return render(request, 'dashboard/admin_dash.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})

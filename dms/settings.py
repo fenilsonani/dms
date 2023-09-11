@@ -42,13 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'dashboard',
-    # 'farm',
-    # 'transport',
-    # 'iceblock',
-    # 'rent',
+    'farm',
+    'transport',
+    'iceblock',
+    'rent',
     'milkfarm',
-    # 'icechip',
-    # 'rowater'
+    'icechip',
+    'rowater'
 ]
 
 MIDDLEWARE = [
