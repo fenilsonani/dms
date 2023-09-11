@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'vercel.app',
+    '.vercel.app',
 ]
 
 # Application definition
@@ -80,7 +80,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'dms.wsgi.application'
+# WSGI_APPLICATION = 'dms.wsgi.application'
+# vercel_app/settings.py
+WSGI_APPLICATION = 'vercel_app.wsgi.app'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
