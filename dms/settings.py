@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     'rent',
     'milkfarm',
     'icechip',
-    'rowater'
+    'rowater',
+    'django_filters',
+    'import_export',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -93,10 +96,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
         'NAME': 'dms',
-        'USER': 'admin',
-        'PASSWORD': '3l2kdTbq',
-        'HOST': 'mysql-143615-0.cloudclusters.net',  # Change if your MySQL server is on a different host
-        'PORT': '16326',  # MySQL default port
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',  # Change if your MySQL server is on a different host
+        'PORT': '3306',
     },
 }
 
