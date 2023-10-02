@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import RentalPersonForm, RentPaymentForm, HouseForm
 from .models import RentalPerson, House, RentPayment
+from .resources import HouseResource, RentPaymentResource, RentalPersonResource
 
 
 # Create your views here.
@@ -43,6 +45,13 @@ def create_rental(request):
 def display_house(request):
     if request.user.is_authenticated:
         houses = House.objects.all()
+
+        if 'export' in request.GET:
+            dataset = HouseResource().export(queryset=houses)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="houses.csv"'
+            return response
+
         return render(request, 'rent/display/house.html', {'houses': houses})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
@@ -51,6 +60,13 @@ def display_house(request):
 def display_rental(request):
     if request.user.is_authenticated:
         rentals = RentalPerson.objects.all()
+
+        if 'export' in request.GET:
+            dataset = RentalPersonResource().export(queryset=rentals)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="rentals.csv"'
+            return response
+
         return render(request, 'rent/display/rental.html', {'rentals': rentals})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
@@ -136,9 +152,9 @@ def display_rent_payment(request):
         rent_payments = RentPayment.objects.all()
 
         if 'export' in request.GET:
-            dataset = HouseResource().export(queryset=houses)
+            dataset = RentPaymentResource().export(queryset=rent_payments)
             response = HttpResponse(dataset.csv, content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="houses.csv"'
+            response['Content-Disposition'] = 'attachment; filename="rent_payments.csv"'
             return response
 
         return render(request, 'rent/display/rent_payment.html', {'rent_payments': rent_payments})
