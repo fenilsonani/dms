@@ -134,6 +134,13 @@ def add_rent_payment(request):
 def display_rent_payment(request):
     if request.user.is_authenticated:
         rent_payments = RentPayment.objects.all()
+
+        if 'export' in request.GET:
+            dataset = HouseResource().export(queryset=houses)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="houses.csv"'
+            return response
+
         return render(request, 'rent/display/rent_payment.html', {'rent_payments': rent_payments})
     else:
         return render(request, 'users/not_loggedin.html', {'message': 'You need to login first.'})
