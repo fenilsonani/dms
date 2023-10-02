@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,11 +95,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'dms',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Change if your MySQL server is on a different host
-        'PORT': '3306',
+        'NAME': 'db-1d8lhjzb44zv',
+        'USER': 'db-1d8lhjzb44zv',
+        'PASSWORD': 'NZant1Lm2YizZJakcXa4oSZN',
+        'HOST': 'up-nl-ams1-mysql-1.db.run-on-erla.com',  # Change if your MySQL server is on a different host
+        'PORT': '11550',
     },
 }
 
@@ -136,15 +136,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
