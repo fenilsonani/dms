@@ -1,8 +1,10 @@
 import datetime
 from collections import defaultdict
 from datetime import date, timedelta
+
 from django.db.models import Sum, Count
 from django.shortcuts import render, redirect
+
 from farm.models import Farm, Season, SeasonExpense, Crop
 from iceblock.models import Customer as IceCustomer
 from iceblock.models import Delivery as IceDelivery
@@ -196,39 +198,39 @@ def dashboard(request):
                                'emp_length': emp_length
                                })
             elif business == "rowater":
-                one_week_ago = date.today() - timedelta(days=7)
                 emp_length = len(users.all())
                 customer_length = len(RowaterCustomer.objects.all())
                 delivery_length = len(RowaterDelivery.objects.all())
-                delivery_data = (
-                    RowaterCustomer.objects
-                    .filter(date__gte=one_week_ago)
-                    .values('date')
-                    .annotate(total_deliveries=Count('id'))
-                    .order_by('date')
-                )
-                labels = [str(item['date']) for item in delivery_data]
-                data = [item['total_deliveries'] for item in delivery_data]
-                delivery_data1 = (
-                    RowaterDelivery.objects
-                    .filter(date__gte=one_week_ago)  # Filter data for the last 7 days
-                    .values('date')
-                    .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
-                    .order_by('date')
-                )
-                labels1 = [str(item['date']) for item in delivery_data1]
-                data1 = [item['total_ice_blocks'] for item in delivery_data1]
-
+                # delivery_data = (
+                #     RowaterCustomer.objects
+                #     .filter(date__gte=date.today() - timedelta(days=7)) # Filter data for the last 7 days
+                #     .values('date')
+                #     .annotate(total_deliveries=Count('id'))
+                #     .order_by('date')
+                # )
+                # labels = [str(item['date']) for item in delivery_data]
+                # data = [item['total_deliveries'] for item in delivery_data]
+                # delivery_data1 = (
+                #     RowaterDelivery.objects
+                #     .filter(date__gte=date.today() - timedelta(days=7))  # Filter data for the last 7 days
+                #     .values('date')
+                #     .annotate(total_ice_blocks=Sum('daily_ice_block_given'))
+                #     .order_by('date')
+                # )
+                # labels1 = [str(item['date']) for item in delivery_data1]
+                # data1 = [item['total_ice_blocks'] for item in delivery_data1]
                 return render(request, 'dashboard/admin_dash_rowater.html',
-                              {'usertype': 'Admin', 'business': business,
-                               'customer_length': customer_length, 'delivery_length': delivery_length,
-                               'emp_length': emp_length,
-                               'labels': labels,
-                               'data': data,
-                               'labels1': labels1,
-                               'data1': data1
-
-                               })
+                              {
+                                  'usertype': 'Admin',
+                                  'business': business,
+                                  'customer_length': customer_length,
+                                  'delivery_length': delivery_length,
+                                  'emp_length': emp_length,
+                                  # 'labels': labels,
+                                  # 'data': data,
+                                  # 'labels1': labels1,
+                                  # 'data1': data1
+                              })
             elif business == "icechip":
                 emp_length = len(users.all())
                 customer_length = len(IceChipCustomer.objects.all())
@@ -266,7 +268,6 @@ def dashboard(request):
                               {'usertype': 'Admin', 'business': business, 'users': users})
         else:
             business = NormalUser.objects.get(user=request.user).business.name.lower()
-
 
             if business == "farming":
                 return render(request, 'dashboard/normal_dash_farm.html',
