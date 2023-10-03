@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
+from .filters import TripsFilter, TransportExpensesFilter, ExpenseFilter
 from .forms import TripForm, ExpenseForm, TransportExpensesForm
 from .models import Trips, TransportExpenses, Expense
-from .filters import TripsFilter,TransportExpensesFilter,ExpenseFilter
+from .resouces import TripsResource, ExpenseResource
+
 
 def create_trip(request):
     if request.user.is_authenticated:
@@ -68,6 +71,12 @@ def add_expense(request):
 def display_trips(request):
     if request.user.is_authenticated:
         trips = TripsFilter(request.GET, queryset=Trips.objects.all())
+
+        if 'export' in request.GET:
+            dataset = TripsResource().export(queryset=trips.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            return response
+
         context = {'trips': trips}
         return render(request, 'transport/display/trips.html', context)
     else:
@@ -77,6 +86,12 @@ def display_trips(request):
 def display_expenses_type(request):
     if request.user.is_authenticated:
         expenses = ExpenseFilter(request.GET, queryset=Expense.objects.all())
+
+        if 'export' in request.GET:
+            dataset = ExpenseResource().export(queryset=expenses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            return response
+
         context = {'expenses': expenses}
         return render(request, 'transport/display/expenses_type.html', context)
     else:
@@ -86,6 +101,12 @@ def display_expenses_type(request):
 def display_expenses(request):
     if request.user.is_authenticated:
         expenses = TransportExpensesFilter(request.GET, queryset=TransportExpenses.objects.all())
+
+        if 'export' in request.GET:
+            dataset = ExpenseResource().export(queryset=expenses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            return response
+
         context = {'expenses': expenses}
         return render(request, 'transport/display/expenses.html', context)
     else:
