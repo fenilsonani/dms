@@ -76,6 +76,7 @@
 {#</table>#}
 
 {% extends 'core/sidebarfarming.html' %}
+{% load widget_tweaks %}
 {% load i18n %}
 
 <!DOCTYPE html>
@@ -92,6 +93,16 @@
         </div>
         </p>
     {% endif %}
+    <form method="get">
+        {% for field in seasons.form %}
+            <div class="form-group">
+                <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                {{ field|add_class:"form-control" }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn mt-3 btn-primary">Filter</button>
+        <button type="submit" class="btn mt-3 btn-primary" name="export" value="1">Export CSV</button>
+    </form>
     <div class="card m-3">
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
