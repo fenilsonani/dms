@@ -69,7 +69,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for trip in trips %}
+                {% for trip in trips.qs %}
                     <tr>
                         <td>{{ trip.id }}</td>
                         <td>{{ trip.starting_km }}</td>

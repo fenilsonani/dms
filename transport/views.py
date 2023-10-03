@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .forms import TripForm, ExpenseForm, TransportExpensesForm
 from .models import Trips, TransportExpenses, Expense
-
+from .filters import TripsFilter,TransportExpensesFilter,ExpenseFilter
 
 def create_trip(request):
     if request.user.is_authenticated:
@@ -67,7 +67,7 @@ def add_expense(request):
 
 def display_trips(request):
     if request.user.is_authenticated:
-        trips = Trips.objects.all()
+        trips = TripsFilter(request.GET, queryset=Trips.objects.all())
         context = {'trips': trips}
         return render(request, 'transport/display/trips.html', context)
     else:
@@ -76,7 +76,7 @@ def display_trips(request):
 
 def display_expenses_type(request):
     if request.user.is_authenticated:
-        expenses = Expense.objects.all()
+        expenses = ExpenseFilter(request.GET, queryset=Expense.objects.all())
         context = {'expenses': expenses}
         return render(request, 'transport/display/expenses_type.html', context)
     else:
@@ -85,7 +85,7 @@ def display_expenses_type(request):
 
 def display_expenses(request):
     if request.user.is_authenticated:
-        expenses = TransportExpenses.objects.all()
+        expenses = TransportExpensesFilter(request.GET, queryset=TransportExpenses.objects.all())
         context = {'expenses': expenses}
         return render(request, 'transport/display/expenses.html', context)
     else:

@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for expense in expenses %}
+                {% for expense in expenses.qs %}
                     <tr>
                         <th scope="row"><a href="#" class="fw-semibold">{{ expense.id }}</a></th>
                         <td>{{ expense.name }}</td>
