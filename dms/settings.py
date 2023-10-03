@@ -94,22 +94,22 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    # 'default': {
-    #     'ENGINE': 'mysql.connector.django',
-    #     'NAME': 'db-1d8lhjzb44zv',
-    #     'USER': 'db-1d8lhjzb44zv',
-    #     'PASSWORD': 'NZant1Lm2YizZJakcXa4oSZN',
-    #     'HOST': 'up-nl-ams1-mysql-1.db.run-on-erla.com',  # Change if your MySQL server is on a different host
-    #     'PORT': '11550',
-    # },
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'dms',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Change if your MySQL server is on a different host
-        'PORT': '3306',
+        'NAME': 'db-1d8lhjzb44zv',
+        'USER': 'db-1d8lhjzb44zv',
+        'PASSWORD': 'NZant1Lm2YizZJakcXa4oSZN',
+        'HOST': 'up-nl-ams1-mysql-1.db.run-on-erla.com',  # Change if your MySQL server is on a different host
+        'PORT': '11550',
     },
+    # 'default': {
+    #     'ENGINE': 'mysql.connector.django',
+    #     'NAME': 'dms',
+    #     'USER': 'root',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',  # Change if your MySQL server is on a different host
+    #     'PORT': '3306',
+    # },
 }
 
 # Password validation
