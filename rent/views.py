@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from .filters import HouseFilter, RentPaymentFilter, RentalPersonFilter
 from .forms import RentalPersonForm, RentPaymentForm, HouseForm
 from .models import RentalPerson, House, RentPayment
 from .resources import HouseResource, RentPaymentResource, RentalPersonResource
@@ -44,7 +45,7 @@ def create_rental(request):
 
 def display_house(request):
     if request.user.is_authenticated:
-        houses = House.objects.all()
+        houses = HouseFilter(request.GET, queryset=House.objects.all())
 
         if 'export' in request.GET:
             dataset = HouseResource().export(queryset=houses)
@@ -59,7 +60,7 @@ def display_house(request):
 
 def display_rental(request):
     if request.user.is_authenticated:
-        rentals = RentalPerson.objects.all()
+        rentals = RentalPersonFilter(request.GET, queryset=RentalPerson.objects.all())
 
         if 'export' in request.GET:
             dataset = RentalPersonResource().export(queryset=rentals)
@@ -149,7 +150,7 @@ def add_rent_payment(request):
 
 def display_rent_payment(request):
     if request.user.is_authenticated:
-        rent_payments = RentPayment.objects.all()
+        rent_payments = RentPaymentFilter(request.GET, queryset=RentPayment.objects.all())
 
         if 'export' in request.GET:
             dataset = RentPaymentResource().export(queryset=rent_payments)
