@@ -48,7 +48,7 @@ def display_house(request):
         houses = HouseFilter(request.GET, queryset=House.objects.all())
 
         if 'export' in request.GET:
-            dataset = HouseResource().export(queryset=houses)
+            dataset = HouseResource().export(queryset=houses.qs)
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="houses.csv"'
             return response
@@ -63,7 +63,7 @@ def display_rental(request):
         rentals = RentalPersonFilter(request.GET, queryset=RentalPerson.objects.all())
 
         if 'export' in request.GET:
-            dataset = RentalPersonResource().export(queryset=rentals)
+            dataset = RentalPersonResource().export(queryset=rentals.qs)
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="rentals.csv"'
             return response
@@ -153,7 +153,7 @@ def display_rent_payment(request):
         rent_payments = RentPaymentFilter(request.GET, queryset=RentPayment.objects.all())
 
         if 'export' in request.GET:
-            dataset = RentPaymentResource().export(queryset=rent_payments)
+            dataset = RentPaymentResource().export(queryset=rent_payments.qs)
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="rent_payments.csv"'
             return response
