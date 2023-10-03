@@ -26,3 +26,7 @@ class ExpenseResource(resources.ModelResource):
 class CropResource(resources.ModelResource):
     class Meta:
         model = Crop
+
+class CropResource(resources.ModelResource):
+    class Meta:
+        model = Crop

@@ -6,31 +6,31 @@ from .models import Customer, DailyProduction, Animal, Labor, Expense, Grass, Pa
 class CustomerFilter(django_filters.FilterSet):
     class Meta:
         model = Customer
-        fields = ['name', 'location', 'mobile_number']
+        fields = ['name', 'address', 'mobile_number']
 
 
 class DailyProductionFilter(django_filters.FilterSet):
     class Meta:
         model = DailyProduction
-        fields = ['date', 'milk', 'amount', 'payment', 'customer']
+        fields = ['date', 'total_milk']
 
 
 class AnimalFilter(django_filters.FilterSet):
     class Meta:
         model = Animal
-        fields = ['name', 'location', 'mobile_number']
+        fields = ['name', 'location']
 
 
 class LaborFilter(django_filters.FilterSet):
     class Meta:
         model = Labor
-        fields = ['name', 'location', 'mobile_number']
+        fields = ['name', 'mobile_number']
 
 
 class ExpenseFilter(django_filters.FilterSet):
     class Meta:
         model = Expense
-        fields = ['name', 'amount', 'date']
+        fields = ['expenses_type', 'amount', 'date']
 
 
 class GrassFilter(django_filters.FilterSet):
@@ -49,4 +49,4 @@ class PaymentFilter(django_filters.FilterSet):
 class DailyDeliveryFilter(django_filters.FilterSet):
     class Meta:
         model = DailyDelivery
-        fields = ['date', 'milk', 'amount', 'payment', 'customer']
+        fields = ['date', 'total_milk', 'final_price', 'customer']

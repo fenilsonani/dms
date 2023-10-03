@@ -33,6 +33,7 @@
 
 
 {% extends 'core/sidebarmilk.html' %}
+{% load widget_tweaks %}
 {% load i18n %}
 
 <!DOCTYPE html>
@@ -49,22 +50,21 @@
         </div>
         </p>
     {% endif %}
+    <form method="get">
+        {% for field in expenses.form %}
+            <div class="form-group">
+                <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                {{ field|add_class:"form-control" }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn mt-3 btn-primary">Filter</button>
+        <button type="submit" class="btn mt-3 btn-primary" name="export" value="1">Export CSV</button>
+    </form>
     <div class="card m-3">
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h4 class="card-title">Expenses Type</h4>
-                </div>
-                <div>
-                    <form method="post" class="d-flex gap-5 h-auto">
-                        {% csrf_token %}
-                        <label for="export_format">Select Export Format:</label>
-                        <select name="export_format" class="form-control w-100" id="export_format">
-                            <option value="pdf">PDF</option>
-                            <option value="csv">CSV</option>
-                        </select>
-                        <button class="btn btn-primary" type="submit">Export</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for expense in expenses %}
+                        {% for expense in expenses.qs %}
                             <tr>
                                 <td>{{ expense.id }}</td>
                                 <td>{{ expense.expenses_type }}</td>
