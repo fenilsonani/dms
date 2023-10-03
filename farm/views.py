@@ -1,17 +1,10 @@
-import csv
-import io
-
 from django.http import HttpResponse
 from django.shortcuts import render
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import inch
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Table
-from reportlab.platypus import TableStyle
 
+from .filters import FarmFilter, SeasonFilter, SeasonExpenseFilter, ExpenseFilter, CropFilter
 from .forms import FarmForm, SeasonForm, CropForm, ExpenseForm, SeasonExpenseForm
 from .models import Farm, Season, Crop, Expense, SeasonExpense
+from .resources import SeasonExpenseResource, CropResource, FarmResource, SeasonResource, ExpenseResource
 
 
 # Create your views here.
@@ -101,19 +94,13 @@ def create_farm(request):
 
 def display_crop(request):
     if request.user.is_authenticated:
-        crops = Crop.objects.all()
+        crops = CropFilter(request.GET, queryset=Crop.objects.all())
 
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf1(crops)
-            elif export_format == 'csv':
-                response = generate_csv1(crops)
-            else:
-                response = HttpResponse("Unsupported format")
-
+        if 'export' in request.GET:
+            dataset = CropResource().export(queryset=crops.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'farm/display/display_crop.html', {'crops': crops})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -150,17 +137,10 @@ def delete_crop(request, id):
 
 def display_expense_type(request):
     if request.user.is_authenticated:
-        expenses = Expense.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf2(expenses)
-            elif export_format == 'csv':
-                response = generate_csv2(expenses)
-            else:
-                response = HttpResponse("Unsupported format")
-
+        expenses = ExpenseFilter(request.GET, queryset=Expense.objects.all())
+        if 'export' in request.GET:
+            dataset = ExpenseResource().export(queryset=expenses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
         return render(request, 'farm/display/display_expense_type.html', {'expenses': expenses})
     else:
@@ -198,18 +178,13 @@ def delete_expense_type(request, id):
 
 def display_season(request):
     if request.user.is_authenticated:
-        seasons = Season.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf3(seasons)
-            elif export_format == 'csv':
-                response = generate_csv3(seasons)
-            else:
-                response = HttpResponse("Unsupported format")
+        seasons = SeasonFilter(request.GET, queryset=Season.objects.all())
 
+        if 'export' in request.GET:
+            dataset = SeasonResource().export(queryset=seasons.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'farm/display/display_season.html', {'seasons': seasons})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -246,18 +221,13 @@ def delete_season(request, id):
 
 def display_season_expense(request):
     if request.user.is_authenticated:
-        season_expenses = SeasonExpense.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf4(season_expenses)
-            elif export_format == 'csv':
-                response = generate_csv4(season_expenses)
-            else:
-                response = HttpResponse("Unsupported format")
+        season_expenses = SeasonExpenseFilter(request.GET, queryset=SeasonExpense.objects.all())
 
+        if 'export' in request.GET:
+            dataset = SeasonExpenseResource().export(queryset=season_expenses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'farm/display/display_season_expense.html', {'season_expenses': season_expenses})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -294,7 +264,13 @@ def delete_season_expense(request, id):
 
 def display_farm(request):
     if request.user.is_authenticated:
-        farms = Farm.objects.all()
+        farms = FarmFilter(request.GET, queryset=Farm.objects.all())
+
+        if 'export' in request.GET:
+            dataset = FarmResource().export(queryset=farms.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            return response
+
         return render(request, 'farm/display/display_farm.html', {'farms': farms})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -327,124 +303,3 @@ def delete_farm(request, id):
                       {'message': 'Farm deleted successfully', 'farms': farms})
     else:
         return render(request, 'users/not_loggedin.html')
-
-
-def generate_pdf1(crops):
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-    p.setFont("Helvetica", 12)
-    p.drawString(1 * inch, 10 * inch, "Crops")
-    data = []
-    data.append(['Name'])
-    for crop in crops:
-        data.append([crop.name])
-    t = Table(data)
-    t.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.green)]))
-    t.wrapOn(p, 0, 0)
-    t.drawOn(p, 1 * inch, 9 * inch)
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return HttpResponse(buffer, content_type='application/pdf')
-
-
-def generate_csv1(crops):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="crops.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Name'])
-    for crop in crops:
-        writer.writerow([crop.name])
-    return response
-
-
-def generate_pdf2(expenses):
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-    p.setFont("Helvetica", 12)
-    p.drawString(1 * inch, 10 * inch, "Expenses")
-    data = []
-    data.append(['Name'])
-    for expense in expenses:
-        data.append([expense.name])
-    t = Table(data)
-    t.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.green)]))
-    t.wrapOn(p, 0, 0)
-    t.drawOn(p, 1 * inch, 9 * inch)
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return HttpResponse(buffer, content_type='application/pdf')
-
-
-def generate_csv2(expenses):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="expenses.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Name'])
-    for expense in expenses:
-        writer.writerow([expense.name])
-    return response
-
-
-def generate_pdf3(seasons):
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-    p.setFont("Helvetica", 12)
-    p.drawString(1 * inch, 10 * inch, "Seasons")
-    data = []
-    data.append(['Farm', 'Crop', 'Starting Date', 'Harvested Crop Amount (Tons)', 'Harvested Crop Price Per Ton',
-                 'First Payment', 'Second Payment', 'Status'])
-    for season in seasons:
-        data.append([season.farm.name, season.crop.name, season.starting_date, season.harvested_crop_amount_tons,
-                     season.harvested_crop_price_per_ton, season.first_payment, season.second_payment, season.status])
-    t = Table(data)
-    t.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.green)]))
-    t.wrapOn(p, 0, 0)
-    t.drawOn(p, 1 * inch, 9 * inch)
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return HttpResponse(buffer, content_type='application/pdf')
-
-
-def generate_csv3(seasons):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="seasons.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Farm', 'Crop', 'Starting Date', 'Harvested Crop Amount (Tons)', 'Harvested Crop Price Per Ton',
-                     'First Payment', 'Second Payment', 'Status'])
-    for season in seasons:
-        writer.writerow([season.farm.name, season.crop.name, season.starting_date, season.harvested_crop_amount_tons,
-                         season.harvested_crop_price_per_ton, season.first_payment, season.second_payment,
-                         season.status])
-    return response
-
-
-def generate_pdf4(season_expenses):
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-    p.setFont("Helvetica", 12)
-    p.drawString(1 * inch, 10 * inch, "Season Expenses")
-    data = []
-    data.append(['Season', 'Expense', 'Amount'])
-    for season_expense in season_expenses:
-        data.append([season_expense.season, season_expense.expense, season_expense.amount])
-    t = Table(data)
-    t.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.green)]))
-    t.wrapOn(p, 0, 0)
-    t.drawOn(p, 1 * inch, 9 * inch)
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return HttpResponse(buffer, content_type='application/pdf')
-
-
-def generate_csv4(season_expenses):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="season_expenses.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Season', 'Expense', 'Amount'])
-    for season_expense in season_expenses:
-        writer.writerow([season_expense.season, season_expense.expense, season_expense.amount])
-    return response
