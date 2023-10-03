@@ -4,11 +4,13 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from reportlab.pdfgen import canvas
 
+from .filters import CustomerFilter, DailyProductionFilter, DailyDeliveryFilter, AnimalFilter, LaborFilter, \
+    ExpenseFilter, GrassFilter, PaymentFilter
 from .forms import AnimalForm, LaborForm, ExpenseForm, GrassForm, CustomerFormCreate, DailyDeliveryForm, \
     DailyProductionForm, PaymentForm, CustomerFormUpdate
-
-CustomerFormUpdate, PaymentForm
 from .models import Animal, Labor, Expense, Grass, Customer, DailyDelivery, DailyProduction, Payment
+from .resources import AnimalResource, LaborResource,ExpenseResource, GrassResource, CustomerResource, \
+    DailyDeliveryResource, DailyProductionResource, PaymentResource
 
 
 # Create your views here.
@@ -216,18 +218,13 @@ def generate_csv3(data):
 
 def view_animal(request):
     if request.user.is_authenticated:
-        animals = Animal.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf(animals)
-            elif export_format == 'csv':
-                response = generate_csv(animals)
-            else:
-                response = HttpResponse("Unsupported format")
+        animals = AnimalFilter(request.GET, queryset=Animal.objects.all())
 
+        if 'export' in request.GET:
+            dataset = AnimalResource().export(queryset=animals.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/animal.html', {'animals': animals})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -235,18 +232,13 @@ def view_animal(request):
 
 def view_labor(request):
     if request.user.is_authenticated:
-        labors = Labor.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf1(labors)
-            elif export_format == 'csv':
-                response = generate_csv1(labors)
-            else:
-                response = HttpResponse("Unsupported format")
+        labors = LaborFilter(request.GET, queryset=Labor.objects.all())
 
+        if 'export' in request.GET:
+            dataset = LaborResource().export(queryset=labors.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/labor.html', {'labors': labors})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -254,18 +246,13 @@ def view_labor(request):
 
 def view_expense(request):
     if request.user.is_authenticated:
-        expenses = Expense.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf2(expenses)
-            elif export_format == 'csv':
-                response = generate_csv2(expenses)
-            else:
-                response = HttpResponse("Unsupported format")
+        expenses = ExpenseFilter(request.GET, queryset=Expense.objects.all())
 
+        if 'export' in request.GET:
+            dataset = ExpenseResource().export(queryset=expenses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/expense.html', {'expenses': expenses})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -273,17 +260,11 @@ def view_expense(request):
 
 def view_grass(request):
     if request.user.is_authenticated:
-        grasses = Grass.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf3(grasses)
-            elif export_format == 'csv':
-                response = generate_csv3(grasses)
-            else:
-                response = HttpResponse("Unsupported format")
+        grasses = GrassFilter(request.GET, queryset=Grass.objects.all())
 
+        if 'export' in request.GET:
+            dataset = GrassResource().export(queryset=grasses.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
 
         return render(request, 'milkfarm/display/grass.html', {'grasses': grasses})
@@ -476,7 +457,13 @@ def create_payment(request):
 
 def view_customer(request):
     if request.user.is_authenticated:
-        customers = Customer.objects.all()
+        customers = CustomerFilter(request.GET, queryset=Customer.objects.all())
+
+        if 'export' in request.GET:
+            dataset = CustomerResource().export(queryset=customers.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            return response
+
         return render(request, 'milkfarm/display/customer.html', {'customers': customers})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -524,18 +511,13 @@ def generate_csv4(data):
 
 def view_daily_delivery(request):
     if request.user.is_authenticated:
-        daily_deliveries = DailyDelivery.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf4(daily_deliveries)
-            elif export_format == 'csv':
-                response = generate_csv4(daily_deliveries)
-            else:
-                response = HttpResponse("Unsupported format")
+        daily_deliveries = DailyDeliveryFilter(request.GET, queryset=DailyDelivery.objects.all())
 
+        if 'export' in request.GET:
+            dataset = DailyDeliveryResource().export(queryset=daily_deliveries.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/daily_delivery.html', {'daily_deliveries': daily_deliveries})
     else:
         return render(request, 'users/not_loggedin.html')
@@ -578,21 +560,17 @@ def generate_csv5(data):
 
 def view_daily_production(request):
     if request.user.is_authenticated:
-        daily_productions = DailyProduction.objects.all()
-        if request.method == 'POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf5(daily_productions)
-            elif export_format == 'csv':
-                response = generate_csv5(daily_productions)
-            else:
-                response = HttpResponse("Unsupported format")
+        daily_productions = DailyProductionFilter(request.GET, queryset=DailyProduction.objects.all())
 
+        if 'export' in request.GET:
+            dataset = DailyProductionResource().export(queryset=daily_productions.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/daily_production.html', {'daily_productions': daily_productions})
     else:
         return render(request, 'users/not_loggedin.html')
+
 
 def generate_pdf6(data):
     response = HttpResponse(content_type='application/pdf')
@@ -630,20 +608,16 @@ def generate_csv6(data):
 
     return response
 
+
 def view_payment(request):
     if request.user.is_authenticated:
-        payments = Payment.objects.all()
-        if request.method=='POST':
-            print(request.POST)
-            export_format = request.POST.get('export_format')
-            if export_format == 'pdf':
-                response = generate_pdf6(payments)
-            elif export_format == 'csv':
-                response = generate_csv6(payments)
-            else:
-                response = HttpResponse("Unsupported format")
+        payments = PaymentFilter(request.GET, queryset=Payment.objects.all())
 
+        if 'export' in request.GET:
+            dataset = PaymentResource().export(queryset=payments.qs)
+            response = HttpResponse(dataset.csv, content_type='text/csv')
             return response
+
         return render(request, 'milkfarm/display/payment.html', {'payments': payments})
     else:
         return render(request, 'users/not_loggedin.html')
