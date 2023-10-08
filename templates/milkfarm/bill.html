@@ -1,0 +1,53 @@
+{% extends 'core/sidebarmilk.html' %}
+<html>
+<head>
+    <title>Add Crop Into The System</title>
+</head>
+<body>
+<h1>
+    Add Crop
+</h1>
+
+{% block content %}
+    <div class="container mt-5">
+        {% if message %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        <h2 class="mb-4">Bill for {{ customer.name }}</h2>
+        <p><strong>Address:</strong> {{ customer.address }}</p>
+        <p><strong>Mobile Number:</strong> {{ customer.mobile_number }}</p>
+
+        <h3 class="mt-4 mb-3">Deliveries:</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>Date</th>
+                <th>Morning Milk</th>
+                <th>Evening Milk</th>
+                <th>Rate For date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for delivery in daily_deliveries %}
+                <tr>
+                    <td>{{ delivery.date }}</td>
+                    <td>{{ delivery.morning_milk }}</td>
+                    <td>{{ delivery.evening_milk }}</td>
+                    <td>{{ delivery.rate }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <p><strong>Total Morning Milk:</strong> {{ total_morning_milk }}</p>
+        <p><strong>Total Evening Milk:</strong> {{ total_evening_milk }}</p>
+        <p><strong>Total Milk:</strong> {{ total_milk }}</p>
+        <h4><strong>Total Amount:</strong> {{ total_amount }}</h4>
+        <a href="{% url 'download_bill' customer.id month year %}">Download Bill for {{month}}/{{year}}</a>
+    </div>
+{% endblock %}
+</body>
+</html>

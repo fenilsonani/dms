@@ -263,6 +263,9 @@ def dashboard(request):
                                'labels1': labels1,
                                'data1': data1
                                })
+            elif business == "all":
+                return render(request, 'dashboard/admin_dash_all.html',
+                              {'usertype': 'Admin', 'business': business, 'users': users})
             else:
                 return render(request, 'dashboard/admin_dash.html',
                               {'usertype': 'Admin', 'business': business, 'users': users})

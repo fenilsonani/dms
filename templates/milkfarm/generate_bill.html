@@ -1,0 +1,17 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="customer">Select Customer:</label>
+    <select name="customer" id="customer">
+        {% for cust in customers %}
+        <option value="{{ cust.id }}">{{ cust.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="month">Select Month:</label>
+    <input type="number" name="month" id="month" min="1" max="12">
+
+    <label for="year">Select Year:</label>
+    <input type="number" name="year" id="year" min="1900">
+
+    <input type="submit" value="Generate Bill">
+</form>

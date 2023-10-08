@@ -51,6 +51,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href={% url 'generate_bill' %}>
+                        <i class="ri-bill-line"></i> <span data-key="t-dashboards">
+                            Generate Bill
+                    </span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarUsers">
                         <i class="ri-user-line"></i> <span data-key="t-dashboards">Manage User</span>
@@ -225,7 +232,7 @@
                     <a class="nav-link menu-link" href="#sidebarExpense" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarExpense">
                         <span class="mdi mdi-wallet-bifold-outline"
-                            style="scale: 1.5;margin-right: 10px"
+                              style="scale: 1.5;margin-right: 10px"
                         ></span>
                         <span data-key="t-apps">Expenses</span>
                     </a>
@@ -255,17 +262,18 @@
 {#other content#}
 <div class="main-content">
     <div class="container-fluid">
-<div class="row">
         <div class="row">
-            <div class="col">
+            <div class="row">
+                <div class="col">
 
-                <div class="h-100">
-                    <div class="w-100">
-                        <div class="row mb-3 pb-1">
-                            <div class="col-12">
-                                {% block content %}
+                    <div class="h-100">
+                        <div class="w-100">
+                            <div class="row mb-3 pb-1">
+                                <div class="col-12">
+                                    {% block content %}
 
-                                {% endblock %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -273,12 +281,11 @@
             </div>
         </div>
     </div>
-</div>
 
-{% block scripts %}
-    {% include 'core/jsloads.html' %}
-{% endblock %}
-{% block gridjs %}
-{% endblock %}
+    {% block scripts %}
+        {% include 'core/jsloads.html' %}
+    {% endblock %}
+    {% block gridjs %}
+    {% endblock %}
 </body>
 </html>

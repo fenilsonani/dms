@@ -1,15 +1,20 @@
-import csv
+from io import BytesIO
 
+from django.http import FileResponse
 from django.http import HttpResponse
 from django.shortcuts import render
-from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 
 from .filters import CustomerFilter, DailyProductionFilter, DailyDeliveryFilter, AnimalFilter, LaborFilter, \
     ExpenseFilter, GrassFilter, PaymentFilter
 from .forms import AnimalForm, LaborForm, ExpenseForm, GrassForm, CustomerFormCreate, DailyDeliveryForm, \
     DailyProductionForm, PaymentForm, CustomerFormUpdate
 from .models import Animal, Labor, Expense, Grass, Customer, DailyDelivery, DailyProduction, Payment
-from .resources import AnimalResource, LaborResource,ExpenseResource, GrassResource, CustomerResource, \
+from .resources import AnimalResource, LaborResource, ExpenseResource, GrassResource, CustomerResource, \
     DailyDeliveryResource, DailyProductionResource, PaymentResource
 
 
@@ -77,143 +82,6 @@ def create_grass(request):
         return render(request, 'milkfarm/grass.html', {'form': form})
     else:
         return render(request, 'users/not_loggedin.html')
-
-
-def generate_pdf(animals):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for animal in animals:
-        pdf.drawString(100, 700, f'Labor ID: {animal.id}')
-        pdf.drawString(100, 680, f'Labor Date: {animal.name}')
-        pdf.drawString(100, 660, f'Labor Date: {animal.location}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv(animals):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Animal Id', 'Animal Name', 'Animal Location'])
-
-    # Write your CSV content here
-    for animal in animals:
-        writer.writerow([animal.id, animal.name, animal.location])
-
-    return response
-
-
-def generate_pdf1(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Labor ID: {dt.id}')
-        pdf.drawString(100, 680, f'Labor Nmae: {dt.name}')
-        pdf.drawString(100, 660, f'Labor Mobile No: {dt.mobile_number}')
-        pdf.drawString(100, 660, f'Labor Labor type: {dt.labor_type}')
-        pdf.drawString(100, 660, f'Labor Payment To Be Paid: {dt.payment_to_be_paid}')
-        pdf.drawString(100, 660, f'Labor Credit: {dt.credit}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv1(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Animal Id', 'Animal Name', 'Animal Mobile No', 'Animal Labor Type', 'Labor Pyament To Be Paid',
-                     'Labor Credit'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.name, dt.mobile_number, dt.labor_type, dt.payment_to_be_paid, dt.credit])
-
-    return response
-
-
-def generate_pdf2(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Expense ID: {dt.id}')
-        pdf.drawString(100, 680, f'Expense Type: {dt.expenses_type}')
-        pdf.drawString(100, 660, f'Expense Amount: {dt.amount}')
-        pdf.drawString(100, 660, f'Expense Date: {dt.date}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv2(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Expense Id', 'Expense Type', 'Expense Amount', 'Expense Date'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.expenses_type, dt.amount, dt.date])
-
-    return response
-
-
-def generate_pdf3(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Grass ID: {dt.id}')
-        pdf.drawString(100, 680, f'Grass Location: {dt.location}')
-        pdf.drawString(100, 660, f'Grass Owner Name: {dt.owner_name}')
-        pdf.drawString(100, 660, f'Grass Owner Mobile: {dt.owner_mobile}')
-        pdf.drawString(100, 660, f'Grass Total Amount Grass: {dt.total_amount_grass}')
-        pdf.drawString(100, 660, f'Grass Rate: {dt.rate}')
-        pdf.drawString(100, 660, f'Grass Final Price: {dt.final_price}')
-        pdf.drawString(100, 660, f'Grass Due Amount: {dt.due_amount}')
-        pdf.drawString(100, 660, f'Grass Amount To Be Paid: {dt.amount_to_be_paid}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv3(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Grass Id', 'Grass Location', 'Grass Owner Name', 'Grass Owner Mobile', 'Grass Total Amount Grass',
-                     'Grass Rate', 'Grass Final Price', 'Grass Due Amount', 'Grass Amount To Be Paid'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.location, dt.owner_name, dt.owner_mobile, dt.total_amount_grass, dt.rate,
-                         dt.final_price, dt.due_amount, dt.amount_to_be_paid])
-
-    return response
 
 
 def view_animal(request):
@@ -469,46 +337,6 @@ def view_customer(request):
         return render(request, 'users/not_loggedin.html')
 
 
-def generate_pdf4(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Daily Delivery ID: {dt.id}')
-        pdf.drawString(100, 680, f'Daily Delivery Customer: {dt.customer}')
-        pdf.drawString(100, 660, f'Daily Delivery Date: {dt.date}')
-        pdf.drawString(100, 660, f'Daily Delivery Morning Milk: {dt.morning_milk}')
-        pdf.drawString(100, 660, f'Daily Delivery Evening Milk: {dt.evening_milk}')
-        pdf.drawString(100, 660, f'Daily Delivery Total Milk: {dt.total_milk}')
-        pdf.drawString(100, 660, f'Daily Delivery Rate: {dt.rate}')
-        pdf.drawString(100, 660, f'Daily Delivery Final Price: {dt.final_price}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv4(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(
-        ['Daily Delivery Id', 'Daily Delivery Customer', 'Daily Delivery Date', 'Daily Delivery Morning Milk',
-         'Daily Delivery Evening Milk', 'Daily Delivery Total Milk', 'Daily Delivery Rate',
-         'Daily Delivery Final Price'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.customer, dt.date, dt.morning_milk, dt.evening_milk, dt.total_milk, dt.rate,
-                         dt.final_price])
-
-    return response
-
-
 def view_daily_delivery(request):
     if request.user.is_authenticated:
         daily_deliveries = DailyDeliveryFilter(request.GET, queryset=DailyDelivery.objects.all())
@@ -523,41 +351,6 @@ def view_daily_delivery(request):
         return render(request, 'users/not_loggedin.html')
 
 
-def generate_pdf5(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Daily Production ID: {dt.id}')
-        pdf.drawString(100, 680, f'Daily Production Date: {dt.date}')
-        pdf.drawString(100, 660, f'Daily Production Milk: {dt.milk}')
-        pdf.drawString(100, 660, f'Daily Production Rate: {dt.rate}')
-        pdf.drawString(100, 660, f'Daily Production Final Price: {dt.final_price}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv5(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(
-        ['Daily Production Id', 'Daily Production Date', 'Daily Production Milk', 'Daily Production Rate',
-         'Daily Production Final Price'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.date, dt.milk, dt.rate, dt.final_price])
-
-    return response
-
-
 def view_daily_production(request):
     if request.user.is_authenticated:
         daily_productions = DailyProductionFilter(request.GET, queryset=DailyProduction.objects.all())
@@ -570,43 +363,6 @@ def view_daily_production(request):
         return render(request, 'milkfarm/display/daily_production.html', {'daily_productions': daily_productions})
     else:
         return render(request, 'users/not_loggedin.html')
-
-
-def generate_pdf6(data):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.pdf"'
-
-    pdf = canvas.Canvas(response)
-
-    # Define your PDF layout and content here
-    for dt in data:
-        pdf.drawString(100, 700, f'Payment ID: {dt.id}')
-        pdf.drawString(100, 680, f'Payment Customer: {dt.customer}')
-        pdf.drawString(100, 660, f'Payment Date: {dt.date}')
-        pdf.drawString(100, 660, f'Payment Amount: {dt.amount}')
-        pdf.drawString(100, 660, f'Payment Payment Type: {dt.payment_type}')
-        pdf.drawString(100, 660, f'Payment Payment To Be Paid: {dt.payment_to_be_paid}')
-        pdf.drawString(100, 660, f'Payment Credit: {dt.credit}')
-        pdf.showPage()
-
-    pdf.save()
-    return response
-
-
-def generate_csv6(data):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="deliveries.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(
-        ['Payment Id', 'Payment Customer', 'Payment Date', 'Payment Amount', 'Payment Payment Type',
-         'Payment Payment To Be Paid', 'Payment Credit'])
-
-    # Write your CSV content here
-    for dt in data:
-        writer.writerow([dt.id, dt.customer, dt.date, dt.amount, dt.payment_type, dt.payment_to_be_paid, dt.credit])
-
-    return response
 
 
 def view_payment(request):
@@ -733,3 +489,92 @@ def delete_payment(request, id):
         return render(request, 'milkfarm/display/payment.html', {'message': 'Payment Deleted Successfully'})
     else:
         return render(request, 'users/not_loggedin.html')
+
+
+# create view for a generate bill page in that i will select the custom from the dropdown and then i will select the month and year and then i will click on the generate bill button then it will generate the bill for that month for a year
+# in the bill it will show the customer name,address and mobile_number also for delivery it will show morning and evening milk for all the days of that month also show the sum of all delivery and also show the total amount for that month
+# also show the total amount of grass for that month
+
+def generate_bill(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            customer_id = request.POST['customer']
+            month = request.POST['month']
+            year = request.POST['year']
+
+            customer = Customer.objects.get(id=customer_id)
+            daily_deliveries = DailyDelivery.objects.filter(customer=customer, date__month=month, date__year=year)
+
+            total_morning_milk = 0
+            total_evening_milk = 0
+            total_milk = 0
+            total_amount = 0
+
+            for delivery in daily_deliveries:
+                total_morning_milk += delivery.morning_milk
+                total_evening_milk += delivery.evening_milk
+                daily_total = delivery.morning_milk + delivery.evening_milk
+                total_milk += daily_total
+                total_amount += daily_total * delivery.rate  # using the rate from DailyDelivery
+
+            return render(request, 'milkfarm/bill.html',
+                          {'customer': customer, 'daily_deliveries': daily_deliveries,
+                           'total_morning_milk': total_morning_milk, 'total_evening_milk': total_evening_milk,
+                           'total_milk': total_milk, 'total_amount': total_amount,
+                           'month': month, 'year': year
+                           })
+        else:
+            customers = Customer.objects.all()
+            return render(request, 'milkfarm/generate_bill.html', {'customers': customers})
+
+
+def download_bill(request, customer_id, month, year):
+    # Fetch customer and daily deliveries
+    customer = Customer.objects.get(id=customer_id)
+    daily_deliveries = DailyDelivery.objects.filter(customer=customer, date__month=month, date__year=year)
+
+    # Calculate totals
+    total_morning_milk = sum(delivery.morning_milk for delivery in daily_deliveries)
+    total_evening_milk = sum(delivery.evening_milk for delivery in daily_deliveries)
+    total_amount = sum(delivery.total_milk * delivery.rate for delivery in daily_deliveries)
+
+    # Initialize PDF generation
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Add customer details to PDF
+    elements.append(Paragraph(f"Bill for {customer.name}", styles["Heading1"]))
+    elements.append(Paragraph(f"Address: {customer.address}", styles["Normal"]))
+    elements.append(Paragraph(f"Mobile Number: {customer.mobile_number}", styles["Normal"]))
+    elements.append(Spacer(1, 0.25 * inch))
+
+    # Create and style the table for deliveries
+    table_data = [["Date", "Morning Milk", "Evening Milk", "Rate"]]
+    for delivery in daily_deliveries:
+        row = [str(delivery.date), str(delivery.morning_milk), str(delivery.evening_milk), str(delivery.rate)]
+        table_data.append(row)
+
+    table = Table(table_data, colWidths=[100, 100, 100, 100])
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ])
+    table.setStyle(style)
+    elements.append(table)
+
+    # Add total amount to PDF
+    elements.append(Spacer(1, 0.5 * inch))
+    elements.append(Paragraph(f"Total Amount: {total_amount}", styles["Normal"]))
+
+    # Generate the PDF
+    doc.build(elements)
+
+    buffer.seek(0)
+    return FileResponse(buffer, content_type='application/pdf', filename=f'bill_{customer_id}_{month}_{year}.pdf')

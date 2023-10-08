@@ -39,4 +39,6 @@ urlpatterns = [
     path('display_daily_production/', views.view_daily_production, name='display_daily_production'),
     path('display_customers/', views.view_customer, name='display_customers'),
     path('display_daily_delivery/', views.view_daily_delivery, name='display_daily_delivery'),
+    path('generate_bill/', views.generate_bill, name='generate_bill'),
+    path('download_bill/<int:customer_id>/<int:month>/<int:year>/', views.download_bill, name='download_bill'),
 ]

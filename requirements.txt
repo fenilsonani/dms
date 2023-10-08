@@ -9,3 +9,5 @@ mysql-connector-python~=8.1.0
 django-filter~=23.3
 django-import-export~=3.3.1
 django-widget-tweaks~=1.5.0
+weasyprint~=60.1
+gobject~=0.1.0
