@@ -104,12 +104,20 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'dms',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Change if your MySQL server is on a different host
-        'PORT': '3306',
+        'NAME': 'db-byz856bestcq',
+        'USER': 'db-byz856bestcq',
+        'PASSWORD': 'as8UeO6EJpnWqzq4zK7F0Q4D',
+        'HOST': 'up-es-mad1-mysql-1.db.run-on-erla.com',  # Change if your MySQL server is on a different host
+        'PORT': '11550',
     },
+    # 'default': {
+    #     'ENGINE': 'mysql.connector.django',
+    #     'NAME': 'dms',
+    #     'USER': 'root',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',  # Change if your MySQL server is on a different host
+    #     'PORT': '3306',
+    # },
 }
 
 # Password validation
